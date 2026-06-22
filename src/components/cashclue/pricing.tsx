@@ -4,88 +4,70 @@ import { Check, Sparkles, Crown, Zap } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-
-const PLANS = [
-  {
-    name: 'Starter',
-    price: 0,
-    period: 'forever',
-    tagline: 'Test the waters',
-    icon: Sparkles,
-    accent: 'var(--emerald-glow)',
-    features: [
-      '3 AI-generated plans',
-      'Basic hustle categories',
-      '7-day idea history',
-      'Community Discord access',
-    ],
-    cta: 'Start free',
-    highlighted: false,
-  },
-  {
-    name: 'Pro',
-    price: 19,
-    period: 'month',
-    tagline: 'For serious builders',
-    icon: Zap,
-    accent: 'var(--gold)',
-    features: [
-      'Unlimited plan generations',
-      'Advanced niche categories',
-      'Income projection charts',
-      'Saved & tagged idea vault',
-      'Weekly 2026 market trend reports',
-      'Priority AI (faster + smarter)',
-      'Export to PDF / Notion',
-    ],
-    cta: 'Go Pro',
-    highlighted: true,
-    badge: 'Most popular',
-  },
-  {
-    name: 'Empire',
-    price: 49,
-    period: 'month',
-    tagline: 'Build a portfolio of hustles',
-    icon: Crown,
-    accent: 'var(--gold)',
-    features: [
-      'Everything in Pro',
-      'AI Hustle Coach (chat 24/7)',
-      'Weekly accountability check-ins',
-      'Tax & legal structure playbook',
-      ' quarterly strategy reviews',
-      'Private mastermind group',
-      'Early access to new features',
-    ],
-    cta: 'Build my empire',
-    highlighted: false,
-  },
-];
+import { useLang } from './language-context';
 
 export function Pricing() {
+  const { t } = useLang();
+
+  const PLANS = [
+    {
+      name: t.price_starter,
+      tagline: t.price_starter_tag,
+      price: 0,
+      period: t.price_forever,
+      icon: Sparkles,
+      accent: 'var(--emerald-glow)',
+      features: t.feat_starter,
+      cta: t.price_cta_free,
+      highlighted: false,
+    },
+    {
+      name: t.price_pro,
+      tagline: t.price_pro_tag,
+      price: 19,
+      period: t.price_month,
+      icon: Zap,
+      accent: 'var(--gold)',
+      features: t.feat_pro,
+      cta: t.price_cta_pro,
+      highlighted: true,
+      badge: t.price_popular,
+    },
+    {
+      name: t.price_empire,
+      tagline: t.price_empire_tag,
+      price: 49,
+      period: t.price_month,
+      icon: Crown,
+      accent: 'var(--gold)',
+      features: t.feat_empire,
+      cta: t.price_cta_empire,
+      highlighted: false,
+    },
+  ];
+
   return (
-    <section id="pricing" className="relative scroll-mt-20 py-16 sm:py-24">
+    <section id="pricing" className="relative scroll-mt-20 py-16 sm:py-24 border-t border-border">
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
       <div className="container relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <Badge variant="outline" className="mb-3 text-[var(--gold)] border-[var(--gold)]/40">
-            Pricing
+            {t.price_badge}
           </Badge>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            One good idea pays for the year.
+            {t.price_title}
           </h2>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg">
-            Start free. Upgrade when a plan actually starts making you money.
+            {t.price_sub}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
-          {PLANS.map((plan) => {
+          {PLANS.map((plan, i) => {
             const Icon = plan.icon;
             return (
               <Card
-                key={plan.name}
+                key={i}
                 className={`relative overflow-hidden transition-all ${
                   plan.highlighted
                     ? 'border-[var(--gold)]/50 bg-gradient-to-b from-[var(--gold)]/8 to-transparent ring-1 ring-[var(--gold)]/30 md:-translate-y-2'
@@ -127,8 +109,8 @@ export function Pricing() {
                     {plan.cta}
                   </Button>
                   <ul className="space-y-2">
-                    {plan.features.map((f, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
+                    {plan.features.map((f, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm">
                         <Check
                           className="h-4 w-4 mt-0.5 shrink-0"
                           style={{ color: plan.accent }}
@@ -144,7 +126,7 @@ export function Pricing() {
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-8">
-          Cancel anytime. 14-day money-back guarantee on all paid plans.
+          {t.price_guarantee}
         </p>
       </div>
     </section>

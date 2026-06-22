@@ -3,8 +3,11 @@
 import Link from 'next/link';
 import { Sparkles, Github, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLang } from './language-context';
+import { LanguageSwitcher } from './language-switcher';
 
 export function Header() {
+  const { t } = useLang();
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -31,23 +34,24 @@ export function Header() {
               href="#how"
               className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              How it works
+              {t.nav_how}
             </Link>
             <Link
               href="#examples"
               className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Examples
+              {t.nav_examples}
             </Link>
             <Link
               href="#pricing"
               className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Pricing
+              {t.nav_pricing}
             </Link>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <LanguageSwitcher />
             <a
               href="https://twitter.com"
               target="_blank"
@@ -71,7 +75,7 @@ export function Header() {
               size="sm"
               className="bg-[var(--emerald-glow)] text-black hover:bg-[var(--emerald-glow)]/90 font-semibold"
             >
-              <Link href="#wizard">Get my plan</Link>
+              <Link href="#wizard">{t.cta_getPlan}</Link>
             </Button>
           </div>
         </div>

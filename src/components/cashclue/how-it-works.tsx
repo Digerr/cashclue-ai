@@ -1,38 +1,25 @@
 'use client';
 
 import { Brain, LineChart, Rocket } from 'lucide-react';
-
-const STEPS = [
-  {
-    icon: Brain,
-    title: '1. Describe yourself',
-    desc: 'Tell the AI your skills, available hours, budget, and goal. Be honest — garbage in, garbage out.',
-    accent: 'var(--emerald-glow)',
-  },
-  {
-    icon: LineChart,
-    title: '2. AI builds your plan',
-    desc: 'CashClue analyzes 50+ hustle models against your profile, runs income projections, and stress-tests for risks.',
-    accent: 'var(--gold)',
-  },
-  {
-    icon: Rocket,
-    title: '3. Execute the roadmap',
-    desc: 'Get 3 personalized hustles with step-by-step roadmaps, real tools, and quick wins you can do this week.',
-    accent: 'var(--emerald-glow)',
-  },
-];
+import { useLang } from './language-context';
 
 export function HowItWorks() {
+  const { t } = useLang();
+  const STEPS = [
+    { icon: Brain, title: t.how_step1_title, desc: t.how_step1_desc, accent: 'var(--emerald-glow)' },
+    { icon: LineChart, title: t.how_step2_title, desc: t.how_step2_desc, accent: 'var(--gold)' },
+    { icon: Rocket, title: t.how_step3_title, desc: t.how_step3_desc, accent: 'var(--emerald-glow)' },
+  ];
+
   return (
     <section id="how" className="relative scroll-mt-20 py-16 sm:py-24 border-t border-border">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            From zero to plan in 30 seconds.
+            {t.how_title}
           </h2>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg">
-            Three steps. No fluff. No 47-page PDF you&apos;ll never read.
+            {t.how_sub}
           </p>
         </div>
 

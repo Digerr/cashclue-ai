@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { ArrowRight, TrendingUp, Zap, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLang } from './language-context';
 
 export function Hero() {
+  const { t } = useLang();
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 grid-bg pointer-events-none opacity-60" />
@@ -17,22 +19,19 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-glow)] opacity-75 animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--emerald-glow)]" />
             </span>
-            New: AI-generated roadmaps now include 2026 market data
+            {t.hero_badge}
           </div>
 
           <h1 className="float-up text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-            Turn your skills <br className="hidden sm:block" />
-            into{' '}
-            <span className="shimmer-text">cold hard cash.</span>
+            {t.hero_title_1}{' '}
+            <span className="shimmer-text">{t.hero_title_2}</span>
           </h1>
 
           <p
             className="float-up mt-6 text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             style={{ animationDelay: '0.1s' }}
           >
-            CashClue AI reads your skills, time, budget, and goals — then builds you a personalized
-            money-making playbook with real numbers, real steps, and real income projections. No
-            hustle-bro fluff. Just a plan you can start today.
+            {t.hero_sub}
           </p>
 
           <div
@@ -45,7 +44,7 @@ export function Hero() {
               className="bg-[var(--emerald-glow)] text-black hover:bg-[var(--emerald-glow)]/90 font-semibold text-base h-12 px-8 pulse-glow"
             >
               <Link href="#wizard" className="flex items-center gap-2">
-                Generate my plan <ArrowRight className="h-4 w-4" />
+                {t.hero_cta_primary} <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button
@@ -54,7 +53,7 @@ export function Hero() {
               variant="outline"
               className="font-semibold text-base h-12 px-8 border-border bg-card/40 backdrop-blur"
             >
-              <Link href="#examples">See examples</Link>
+              <Link href="#examples">{t.hero_cta_secondary}</Link>
             </Button>
           </div>
 
@@ -64,15 +63,15 @@ export function Hero() {
           >
             <div className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-[var(--emerald-glow)]" />
-              <span><strong className="text-foreground">12,847</strong> plans generated</span>
+              <span><strong className="text-foreground">12,847</strong> {t.hero_stat_plans}</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-[var(--gold)]" />
-              <span><strong className="text-foreground">$2.3M+</strong> projected income</span>
+              <span><strong className="text-foreground">$2.3M+</strong> {t.hero_stat_income}</span>
             </div>
             <div className="flex items-center gap-2">
               <Target className="h-4 w-4 text-[var(--emerald-glow)]" />
-              <span><strong className="text-foreground">4.9/5</strong> avg rating</span>
+              <span><strong className="text-foreground">4.9/5</strong> {t.hero_stat_rating}</span>
             </div>
           </div>
         </div>

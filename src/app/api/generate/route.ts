@@ -21,6 +21,8 @@ export async function POST(req: NextRequest) {
       budget: body.budget?.trim() ?? '',
       goal: body.goal?.trim() ?? '',
       riskTolerance: body.riskTolerance ?? 'medium',
+      theme: body.theme ?? 'sideHustle',
+      lang: body.lang ?? 'en',
     });
 
     return NextResponse.json(plan);
