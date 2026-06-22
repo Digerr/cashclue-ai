@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Prisma schema for CashClue AI — production-ready
 
 generator client {
   provider = "prisma-client-js"
@@ -13,20 +9,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+/// Anonymous user identified by a browser cookie (no signup required)
+model AnonymousUser {
+  id           String         @id @default(cuid())
+  /// Browser-set cookie value (32-char hex)
+  cookie       String         @unique
+  /// Free credits remaining (decremented server-side)
+  credits      Int            @default(3)
+  /// IP hash for rate limiting and abuse detection
+  ipHash       String?
+  /// User agent for analytics
+  userAgent    String?
+  /// ISO language code chosen by the user
+  lang         String         @default("en")
+  createdAt    DateTime       @default(now())
+  lastSeenAt   DateTime       @updatedAt
+  plans        GeneratedPlan[]
+  events       AnalyticsEvent[]
 }
 
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model GeneratedPlan {
+  id           String         @id @default(cuid())
+  userId       String
+  user         AnonymousUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Theme ID: sideHustle | startup | content | career | passive
+  theme        String
+  /// Language code
+  lang         String
+  /// Original input as JSON
+  input        String
+  /// AI-generated plan as JSON
+  output       String
+  /// Generation latency in ms (for monitoring)
+  latencyMs    Int
+  /// Model used (for debugging)
+  model        String?
+  /// Whether generation succeeded
+  success      Boolean        @default(true)
+  /// Error message if failed
+  error        String?
+  createdAt    DateTime       @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([theme, lang])
+}
+
+model AnalyticsEvent {
+  id           String         @id @default(cuid())
+  userId       String?
+  user         AnonymousUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  /// Event name: page_view, generate_click, generate_success, generate_error, theme_select, lang_change, pricing_click
+  name         String
+  /// Optional event properties as JSON
+  properties   String?
+  createdAt    DateTime       @default(now())
+
+  @@index([userId])
+  @@index([name, createdAt])
 }

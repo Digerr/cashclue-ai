@@ -1,0 +1,46 @@
+{
+  "name": "CashClue AI — Side-Hustle Strategist",
+  "short_name": "CashClue",
+  "description": "AI-generated money-making plans: side hustles, startup ideas, content strategies, career pivots, and passive income plays. 5 languages, real roadmaps.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1410",
+  "theme_color": "#0a1410",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Generate plan",
+      "short_name": "Generate",
+      "url": "/#wizard",
+      "description": "Build a personalized money-making plan"
+    },
+    {
+      "name": "Pricing",
+      "short_name": "Pricing",
+      "url": "/#pricing"
+    }
+  ]
+}

@@ -74,6 +74,7 @@ export interface Dict {
   wiz_loading_4: string;
   wiz_loading_5: string;
   wiz_loading_6: string;
+  wiz_loading_queue_pos: string;
   wiz_error_empty: string;
   wiz_error_empty_desc: string;
   wiz_error_failed: string;
@@ -221,6 +222,7 @@ export const DICT: Record<Lang, Dict> = {
     wiz_loading_4: 'Comparing 50+ business models...',
     wiz_loading_5: 'Building your roadmap...',
     wiz_loading_6: 'Stress-testing for risks...',
+    wiz_loading_queue_pos: 'In queue',
     wiz_error_empty: 'Tell us about you first',
     wiz_error_empty_desc: 'Add your skills or your goal so the AI has something to work with.',
     wiz_error_failed: 'Generation failed',
@@ -362,6 +364,7 @@ export const DICT: Record<Lang, Dict> = {
     wiz_loading_4: 'Сравниваю 50+ моделей бизнеса...',
     wiz_loading_5: 'Строю твою дорожную карту...',
     wiz_loading_6: 'Проверяю на риски...',
+    wiz_loading_queue_pos: 'В очереди',
     wiz_error_empty: 'Сначала расскажи о себе',
     wiz_error_empty_desc: 'Добавь навыки или цель, чтобы AI было с чем работать.',
     wiz_error_failed: 'Генерация не удалась',
@@ -503,6 +506,7 @@ export const DICT: Record<Lang, Dict> = {
     wiz_loading_4: 'Comparando +50 modelos de negocio...',
     wiz_loading_5: 'Construyendo tu hoja de ruta...',
     wiz_loading_6: 'Evaluando riesgos...',
+    wiz_loading_queue_pos: 'En cola',
     wiz_error_empty: 'Primero cuéntanos sobre ti',
     wiz_error_empty_desc: 'Añade tus habilidades o tu meta para que la IA tenga algo con qué trabajar.',
     wiz_error_failed: 'Generación fallida',
@@ -644,6 +648,7 @@ export const DICT: Record<Lang, Dict> = {
     wiz_loading_4: 'Vergleiche 50+ Geschäftsmodelle...',
     wiz_loading_5: 'Baue deine Roadmap...',
     wiz_loading_6: 'Stresstest auf Risiken...',
+    wiz_loading_queue_pos: 'In der Warteschlange',
     wiz_error_empty: 'Erzähl uns erst von dir',
     wiz_error_empty_desc: 'Füg deine Skills oder dein Ziel hinzu, damit die KI etwas zum Arbeiten hat.',
     wiz_error_failed: 'Generierung fehlgeschlagen',
@@ -785,6 +790,7 @@ export const DICT: Record<Lang, Dict> = {
     wiz_loading_4: 'Comparaison de 50+ modèles...',
     wiz_loading_5: 'Construction de ta feuille de route...',
     wiz_loading_6: 'Test de résistance des risques...',
+    wiz_loading_queue_pos: 'En file d\'attente',
     wiz_error_empty: 'Parle-nous de toi d\'abord',
     wiz_error_empty_desc: 'Ajoute tes compétences ou ton objectif pour que l\'IA ait de la matière.',
     wiz_error_failed: 'Génération échouée',
