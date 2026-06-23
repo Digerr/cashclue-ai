@@ -1,4 +1,5 @@
 'use client';
+import { ui } from '@/lib/ui-strings';
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -112,8 +113,8 @@ export default function ProfilePage() {
                 </div>
                 {next && (
                   <div className="text-right">
-                    <div className="text-[10px] text-muted-foreground">Next: {next.icon} {next.name}</div>
-                    <div className="text-[10px] font-mono text-muted-foreground">at Lv {next.minLevel}</div>
+                    <div className="text-[10px] text-muted-foreground">{ui(lang, 'next_rank')}: {next.icon} {next.name}</div>
+                    <div className="text-[10px] font-mono text-muted-foreground">{ui(lang, 'at_level')} {next.minLevel}</div>
                   </div>
                 )}
               </div>

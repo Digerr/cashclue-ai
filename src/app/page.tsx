@@ -1,4 +1,5 @@
 'use client';
+import { ui } from '@/lib/ui-strings';
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -82,7 +83,7 @@ export default function HomePage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-primary font-bold mb-1">
-                <Calendar className="h-3 w-3" /> Daily Challenge
+                <Calendar className="h-3 w-3" /> {ui(lang, 'daily_challenge')}
               </div>
               <div className="font-bold text-base truncate">{daily.title}</div>
               <div className="text-xs text-muted-foreground truncate">{daily.description}</div>
@@ -101,8 +102,8 @@ export default function HomePage() {
       {/* Popular quizzes — card grid */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Popular</h2>
-          <Link href="/categories" onClick={() => trigger('tap')} className="text-xs text-primary hover:underline">All {SEED_QUIZZES.length} →</Link>
+          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wide">{ui(lang, 'popular')}</h2>
+          <Link href="/categories" onClick={() => trigger('tap')} className="text-xs text-primary hover:underline">{ui(lang, 'view_all')} {SEED_QUIZZES.length} →</Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 stagger">
           {featured.map((q) => (

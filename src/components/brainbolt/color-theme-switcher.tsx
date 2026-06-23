@@ -50,7 +50,7 @@ export function ColorThemeSwitcher() {
       </div>
 
       {open && (
-        <div className="absolute right-0 top-full mt-1 z-50 w-48 rounded-xl border border-border bg-popover shadow-lg-card overflow-hidden">
+        <div className="absolute right-0 top-full mt-1 z-[60] w-48 rounded-xl border border-border bg-popover shadow-lg-card overflow-hidden max-h-[70vh] overflow-y-auto">
           <div className="px-3 py-2 text-[10px] uppercase tracking-wider text-muted-foreground border-b border-border">
             Color theme
           </div>

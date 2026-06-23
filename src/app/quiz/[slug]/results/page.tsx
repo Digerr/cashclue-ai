@@ -1,4 +1,5 @@
 'use client';
+import { ui } from '@/lib/ui-strings';
 
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -41,7 +42,7 @@ export default function ResultsPage() {
     return (
       <div className="container mx-auto max-w-3xl px-4 py-20 text-center">
         <p className="text-muted-foreground mb-4">No result found</p>
-        <Button asChild><Link href="/categories">Browse quizzes</Link></Button>
+        <Button asChild><Link href="/categories">{ui(lang, 'browse_quizzes')}</Link></Button>
       </div>
     );
   }

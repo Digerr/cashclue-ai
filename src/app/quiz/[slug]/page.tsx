@@ -1,4 +1,5 @@
 'use client';
+import { ui } from '@/lib/ui-strings';
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -47,9 +48,9 @@ function QuizPage() {
   const category = getLocalized(seed.category, lang);
 
   const modes = [
-    { id: 'classic' as const, icon: Target, title: 'Classic', desc: '10 questions, 15s each', accent: 'var(--emerald-glow)' },
-    { id: 'time-attack' as const, icon: Zap, title: 'Time Attack', desc: '60s, max correct', accent: 'var(--gold)' },
-    { id: 'survival' as const, icon: Skull, title: 'Survival', desc: '1 wrong = game over', accent: '#ef4444' },
+    { id: 'classic' as const, icon: Target, title: ui(lang, 'classic'), desc: ui(lang, 'classic_desc'), accent: 'var(--emerald-glow)' },
+    { id: 'time-attack' as const, icon: Zap, title: ui(lang, 'time_attack'), desc: ui(lang, 'attack_desc'), accent: 'var(--gold)' },
+    { id: 'survival' as const, icon: Skull, title: ui(lang, 'survival'), desc: ui(lang, 'survival_desc'), accent: '#ef4444' },
   ];
 
   const handlePlay = () => {
@@ -106,7 +107,7 @@ function QuizPage() {
       {/* Play button */}
       <Button onClick={handlePlay} size="lg" className="w-full h-14 text-base bg-[var(--emerald-glow)] text-black hover:bg-[var(--emerald-glow)]/90 font-bold">
         <Play className="h-5 w-5 mr-2" />
-        Play {activeMode === 'time-attack' ? 'Time Attack' : activeMode === 'survival' ? 'Survival' : 'Classic'}
+        {ui(lang, activeMode === 'time-attack' ? 'play_attack' : activeMode === 'survival' ? 'play_survival' : 'play_classic')}
         <ChevronRight className="h-5 w-5 ml-2" />
       </Button>
 

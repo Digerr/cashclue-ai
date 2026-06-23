@@ -1,4 +1,5 @@
 'use client';
+import { ui } from '@/lib/ui-strings';
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';

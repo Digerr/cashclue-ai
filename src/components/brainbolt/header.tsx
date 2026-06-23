@@ -8,9 +8,10 @@ import { useLang } from './language-context';
 import { LanguageSwitcher } from './language-switcher';
 import { ColorThemeSwitcher } from './color-theme-switcher';
 import { useFeedback } from '@/hooks/use-feedback';
+import { ui } from '@/lib/ui-strings';
 
 export function Header() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { trigger } = useFeedback();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profile, setProfile] = useState<any>(null);
@@ -33,9 +34,9 @@ export function Header() {
   }, [menuOpen]);
 
   const navItems = [
-    { href: '/categories', label: t.nav_quizzes },
-    { href: '/leaderboard', label: t.nav_leaderboard },
-    { href: '/achievements', label: 'Awards' },
+    { href: '/categories', label: t.nav_quizzes, emoji: '🎮' },
+    { href: '/leaderboard', label: t.nav_leaderboard, emoji: '🏆' },
+    { href: '/achievements', label: ui(lang, 'awards'), emoji: '🎖' },
   ];
 
   const handleNav = () => { trigger('tap'); setMenuOpen(false); };
@@ -43,13 +44,13 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 glass border-b border-border">
-        <div className="mx-auto max-w-3xl px-4 h-14 flex items-center justify-between gap-2">
+        <div className="mx-auto max-w-3xl px-4 h-12 flex items-center justify-between gap-2">
           {/* Logo */}
           <Link href="/" onClick={() => trigger('tap')} className="flex items-center gap-2 press shrink-0">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Zap className="h-4 w-4" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Zap className="h-3.5 w-3.5" />
             </div>
-            <span className="font-bold text-sm hidden sm:block">BrainBolt</span>
+            <span className="font-bold text-sm">BrainBolt</span>
           </Link>
 
           {/* Desktop nav */}
@@ -73,27 +74,20 @@ export function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-1.5">
-            {/* XP bar — always visible */}
-            {profile && profile.totalQuizzes > 0 ? (
-              <Link href="/profile" onClick={() => trigger('tap')} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-card border border-border press">
-                {/* Avatar */}
-                <span className="text-base">{profile.avatar || '🎯'}</span>
-                {/* Level + bar */}
+            {/* Avatar / Profile link */}
+            <Link href="/profile" onClick={() => trigger('tap')} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg bg-card border border-border press">
+              <span className="text-sm">{profile?.avatar || '🎯'}</span>
+              {profile && profile.totalQuizzes > 0 ? (
                 <div className="hidden sm:flex flex-col gap-0.5">
                   <span className="text-[10px] font-bold text-primary leading-none">Lv {profile.level}</span>
-                  <div className="w-20 h-1 bg-muted rounded-full overflow-hidden">
+                  <div className="w-16 h-1 bg-muted rounded-full overflow-hidden">
                     <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${(profile.levelProgress || 0) * 100}%` }} />
                   </div>
                 </div>
-                {/* Mobile: just level */}
-                <span className="sm:hidden text-[10px] font-bold text-primary">Lv{profile.level}</span>
-              </Link>
-            ) : (
-              <Link href="/profile" onClick={() => trigger('tap')} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-card border border-border press">
-                <span className="text-base">🎯</span>
-                <span className="text-[10px] font-bold text-muted-foreground hidden sm:block">New</span>
-              </Link>
-            )}
+              ) : (
+                <span className="text-[10px] font-bold text-muted-foreground hidden sm:block">{ui(lang, 'profile')}</span>
+              )}
+            </Link>
             <div className="hidden md:block">
               <ColorThemeSwitcher />
             </div>
@@ -102,7 +96,7 @@ export function Header() {
             </div>
             <button
               onClick={() => { trigger('tap'); setMenuOpen(!menuOpen); }}
-              className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg press"
+              className="md:hidden flex h-8 w-8 items-center justify-center rounded-lg press"
               aria-label="Menu"
             >
               {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -111,17 +105,21 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — FIXED: links work now */}
       {menuOpen && (
-        <div className="md:hidden fixed inset-0 top-14 z-40 bg-background animate-fade-in" onClick={() => setMenuOpen(false)}>
-          <nav className="flex flex-col p-4 gap-1" onClick={(e) => e.stopPropagation()}>
-            <Link href="/" onClick={handleNav} className="px-4 py-3.5 text-base font-medium press rounded-xl hover:bg-accent">🏠 Home</Link>
+        <div className="md:hidden fixed inset-0 top-12 z-40 bg-background animate-fade-in">
+          <nav className="flex flex-col p-4 gap-1">
+            <Link href="/" onClick={handleNav} className="px-4 py-3 text-base font-medium press rounded-xl hover:bg-accent flex items-center gap-3">
+              <span>🏠</span> {ui(lang, 'home')}
+            </Link>
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href} onClick={handleNav} className="px-4 py-3.5 text-base font-medium press rounded-xl hover:bg-accent">
-                {item.href === '/categories' ? '🎮 ' : item.href === '/leaderboard' ? '🏆 ' : '🎖 '}{item.label}
+              <Link key={item.href} href={item.href} onClick={handleNav} className="px-4 py-3 text-base font-medium press rounded-xl hover:bg-accent flex items-center gap-3">
+                <span>{item.emoji}</span> {item.label}
               </Link>
             ))}
-            <Link href="/profile" onClick={handleNav} className="px-4 py-3.5 text-base font-medium press rounded-xl hover:bg-accent">👤 Profile</Link>
+            <Link href="/profile" onClick={handleNav} className="px-4 py-3 text-base font-medium press rounded-xl hover:bg-accent flex items-center gap-3">
+              <span>👤</span> {ui(lang, 'profile')}
+            </Link>
             <div className="flex items-center gap-3 px-4 py-3 mt-2 border-t border-border">
               <ColorThemeSwitcher />
               <LanguageSwitcher />

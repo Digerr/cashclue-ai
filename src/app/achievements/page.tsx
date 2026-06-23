@@ -1,4 +1,5 @@
 'use client';
+import { ui } from '@/lib/ui-strings';
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -53,7 +54,7 @@ export default function AchievementsPage() {
       </div>
 
       {/* Unlocked */}
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">Unlocked ({unlocked.length})</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">{ui(lang, 'unlocked')} ({unlocked.length})</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-8">
         {unlocked.map(a => (
           <Card key={a.id} className="border-[var(--emerald-glow)]/30 bg-[var(--emerald-glow)]/5">
@@ -67,7 +68,7 @@ export default function AchievementsPage() {
       </div>
 
       {/* Locked */}
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">Locked ({locked.length})</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">{ui(lang, 'locked')} ({locked.length})</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {locked.map(a => (
           <Card key={a.id} className="border-border bg-card/40 opacity-60">

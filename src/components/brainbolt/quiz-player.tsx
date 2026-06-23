@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useLang } from './language-context';
 import { useSound } from '@/hooks/use-sound';
 import { SEED_QUIZZES, getLocalized } from '@/lib/quiz-data';
+import { ui } from '@/lib/ui-strings';
 
 interface PlayerAnswer {
   questionId: string;
@@ -252,12 +253,17 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   const timeColor = timeLeft <= 3 ? '#ef4444' : timeLeft <= 7 ? 'var(--gold)' : 'var(--emerald-glow)';
 
   return (
-    <section className="mx-auto max-w-xl px-4 py-3 sm:py-4 flex flex-col" style={{ minHeight: 'calc(100vh - 56px)' }}>
-      {/* Top bar — compact */}
-      <div className="flex items-center justify-between gap-2 mb-3">
+    <section className="mx-auto max-w-xl px-4 py-2 flex flex-col" style={{ minHeight: 'calc(100vh - 48px)', maxHeight: 'calc(100vh - 48px)', overflow: 'hidden' }}>
+      {/* Top bar — ultra compact */}
+      <div className="flex items-center justify-between gap-2 mb-2">
         <button onClick={() => router.push('/categories')} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground press">
-          <Home className="h-3.5 w-3.5" /> Exit
+          <Home className="h-3.5 w-3.5" /> {ui(lang, 'exit')}
         </button>
+        {/* Quiz title in header */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm">{quiz.icon}</span>
+          <span className="text-xs font-bold truncate max-w-[100px]">{quiz.title}</span>
+        </div>
         <div className="flex items-center gap-2">
           {streak >= 2 && <Badge className="text-[9px] bg-orange-500/20 text-orange-400 border-orange-500/30"><Flame className="h-2.5 w-2.5 mr-0.5" />{streak}</Badge>}
           <Badge variant="outline" className={`text-[9px] uppercase ${
@@ -356,11 +362,11 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
           {showFeedback && (
             <div className="mt-3 text-center animate-fade-in">
               {selectedIdx === correctIdx ? (
-                <span className="text-sm font-bold text-primary">✓ Correct!</span>
+                <span className="text-sm font-bold text-primary">✓ {ui(lang, 'correct')}</span>
               ) : selectedIdx === -1 ? (
-                <span className="text-sm font-bold text-destructive">⏰ Time's up!</span>
+                <span className="text-sm font-bold text-destructive">⏰ {ui(lang, 'times_up')}</span>
               ) : (
-                <span className="text-sm font-bold text-destructive">✗ Wrong! The correct answer is highlighted.</span>
+                <span className="text-sm font-bold text-destructive">✗ {ui(lang, 'correct_answer_is')}</span>
               )}
             </div>
           )}
@@ -382,11 +388,11 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
                   onClick={useHint}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold/10 border border-gold/30 text-gold text-xs font-medium press"
                 >
-                  💡 50/50 Hint ({hintsLeft} left)
+                  💡 50/50 ({hintsLeft} {ui(lang, 'hints_left')})
                 </button>
               ) : (
                 <div className="text-[9px] text-muted-foreground">
-                  {hintsLeft === 0 ? '💡 No hints left — <a href="#pricing" class="text-gold">get Pro</a>' : ''}
+                  {hintsLeft === 0 ? '💡 No hints' : ''}
                 </div>
               )}
               <div className="text-[9px] text-muted-foreground">
