@@ -1876,6 +1876,356 @@ export const SEED_QUIZZES: SeedQuiz[] = [
       },
     ],
   },
+
+  // ============================================================
+  // 17. MATH — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'math-basics',
+    title: { en: 'Math Basics', ru: 'Математика' },
+    description: { en: 'Arithmetic, geometry, and basic math concepts.', ru: 'Арифметика, геометрия и базовая математика.' },
+    category: { en: 'Science', ru: 'Наука' },
+    difficulty: 'easy',
+    icon: '🔢',
+    color: '#10b981',
+    questions: [
+      { text: { en: 'What is 7 × 8?', ru: 'Сколько 7 × 8?' }, options: [{ en: '54', ru: '54' }, { en: '56', ru: '56' }, { en: '64', ru: '64' }, { en: '58', ru: '58' }], correctIndex: 1 },
+      { text: { en: 'What is the square root of 144?', ru: 'Корень из 144?' }, options: [{ en: '10', ru: '10' }, { en: '11', ru: '11' }, { en: '12', ru: '12' }, { en: '14', ru: '14' }], correctIndex: 2 },
+      { text: { en: 'How many degrees in a triangle?', ru: 'Сколько градусов в треугольнике?' }, options: [{ en: '90', ru: '90' }, { en: '180', ru: '180' }, { en: '270', ru: '270' }, { en: '360', ru: '360' }], correctIndex: 1 },
+      { text: { en: 'What is 15% of 200?', ru: 'Сколько 15% от 200?' }, options: [{ en: '20', ru: '20' }, { en: '25', ru: '25' }, { en: '30', ru: '30' }, { en: '35', ru: '35' }], correctIndex: 2 },
+      { text: { en: 'What is 9² (nine squared)?', ru: 'Сколько 9²?' }, options: [{ en: '72', ru: '72' }, { en: '81', ru: '81' }, { en: '90', ru: '90' }, { en: '99', ru: '99' }], correctIndex: 1 },
+      { text: { en: 'How many sides does a hexagon have?', ru: 'Сколько сторон у шестиугольника?' }, options: [{ en: '5', ru: '5' }, { en: '6', ru: '6' }, { en: '7', ru: '7' }, { en: '8', ru: '8' }], correctIndex: 1 },
+      { text: { en: 'What is 144 ÷ 12?', ru: 'Сколько 144 ÷ 12?' }, options: [{ en: '10', ru: '10' }, { en: '11', ru: '11' }, { en: '12', ru: '12' }, { en: '14', ru: '14' }], correctIndex: 2 },
+      { text: { en: 'What is the next prime after 7?', ru: 'Простое число после 7?' }, options: [{ en: '9', ru: '9' }, { en: '10', ru: '10' }, { en: '11', ru: '11' }, { en: '13', ru: '13' }], correctIndex: 2 },
+      { text: { en: 'What is 0.5 as a fraction?', ru: '0.5 в виде дроби?' }, options: [{ en: '1/3', ru: '1/3' }, { en: '1/2', ru: '1/2' }, { en: '2/3', ru: '2/3' }, { en: '3/4', ru: '3/4' }], correctIndex: 1 },
+      { text: { en: 'How many minutes in 2.5 hours?', ru: 'Минут в 2.5 часах?' }, options: [{ en: '120', ru: '120' }, { en: '140', ru: '140' }, { en: '150', ru: '150' }, { en: '180', ru: '180' }], correctIndex: 2 },
+    ],
+  },
+
+  // ============================================================
+  // 18. WORLD CAPITALS — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'world-capitals',
+    title: { en: 'World Capitals', ru: 'Столицы мира' },
+    description: { en: 'Match countries to their capital cities.', ru: 'Подбери столицы к странам.' },
+    category: { en: 'Geography', ru: 'География' },
+    difficulty: 'medium',
+    icon: '🏙️',
+    color: '#3b82f6',
+    questions: [
+      { text: { en: "What is the capital of France?", ru: 'Столица Франции?' }, options: [{ en: 'Lyon', ru: 'Лион' }, { en: 'Paris', ru: 'Париж' }, { en: 'Marseille', ru: 'Марсель' }, { en: 'Nice', ru: 'Ницца' }], correctIndex: 1 },
+      { text: { en: 'What is the capital of Japan?', ru: 'Столица Японии?' }, options: [{ en: 'Osaka', ru: 'Осака' }, { en: 'Kyoto', ru: 'Киото' }, { en: 'Tokyo', ru: 'Токио' }, { en: 'Nagoya', ru: 'Нагоя' }], correctIndex: 2 },
+      { text: { en: 'What is the capital of Canada?', ru: 'Столица Канады?' }, options: [{ en: 'Toronto', ru: 'Торонто' }, { en: 'Vancouver', ru: 'Ванкувер' }, { en: 'Montreal', ru: 'Монреаль' }, { en: 'Ottawa', ru: 'Оттава' }], correctIndex: 3 },
+      { text: { en: 'What is the capital of Egypt?', ru: 'Столица Египта?' }, options: [{ en: 'Cairo', ru: 'Каир' }, { en: 'Alexandria', ru: 'Александрия' }, { en: 'Giza', ru: 'Гиза' }, { en: 'Luxor', ru: 'Луксор' }], correctIndex: 0 },
+      { text: { en: 'What is the capital of Brazil?', ru: 'Столица Бразилии?' }, options: [{ en: 'Rio de Janeiro', ru: 'Рио-де-Жанейро' }, { en: 'Brasília', ru: 'Бразилиа' }, { en: 'São Paulo', ru: 'Сан-Паулу' }, { en: 'Salvador', ru: 'Салвадор' }], correctIndex: 1 },
+      { text: { en: 'What is the capital of South Korea?', ru: 'Столица Южной Кореи?' }, options: [{ en: 'Busan', ru: 'Пусан' }, { en: 'Incheon', ru: 'Инчхон' }, { en: 'Seoul', ru: 'Сеул' }, { en: 'Daegu', ru: 'Тэгу' }], correctIndex: 2 },
+      { text: { en: 'What is the capital of Norway?', ru: 'Столица Норвегии?' }, options: [{ en: 'Bergen', ru: 'Берген' }, { en: 'Oslo', ru: 'Осло' }, { en: 'Trondheim', ru: 'Тронхейм' }, { en: 'Stavanger', ru: 'Ставангер' }], correctIndex: 1 },
+      { text: { en: 'What is the capital of Turkey?', ru: 'Столица Турции?' }, options: [{ en: 'Istanbul', ru: 'Стамбул' }, { en: 'Izmir', ru: 'Измир' }, { en: 'Ankara', ru: 'Анкара' }, { en: 'Bursa', ru: 'Бурса' }], correctIndex: 2 },
+      { text: { en: 'What is the capital of Argentina?', ru: 'Столица Аргентины?' }, options: [{ en: 'Buenos Aires', ru: 'Буэнос-Айрес' }, { en: 'Córdoba', ru: 'Кордова' }, { en: 'Rosario', ru: 'Росарио' }, { en: 'Mendoza', ru: 'Мендоса' }], correctIndex: 0 },
+      { text: { en: 'What is the capital of Thailand?', ru: 'Столица Таиланда?' }, options: [{ en: 'Phuket', ru: 'Пхукет' }, { en: 'Chiang Mai', ru: 'Чианг Май' }, { en: 'Bangkok', ru: 'Бангкок' }, { en: 'Pattaya', ru: 'Паттайя' }], correctIndex: 2 },
+    ],
+  },
+
+  // ============================================================
+  // 19. CHEMISTRY — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'chemistry-basics',
+    title: { en: 'Chemistry', ru: 'Химия' },
+    description: { en: 'Elements, compounds, and chemical reactions.', ru: 'Элементы, соединения и реакции.' },
+    category: { en: 'Science', ru: 'Наука' },
+    difficulty: 'hard',
+    icon: '⚗️',
+    color: '#06b6d4',
+    questions: [
+      { text: { en: 'What is the chemical symbol for water?', ru: 'Химическая формула воды?' }, options: [{ en: 'CO2', ru: 'CO2' }, { en: 'H2O', ru: 'H2O' }, { en: 'O2', ru: 'O2' }, { en: 'NaCl', ru: 'NaCl' }], correctIndex: 1 },
+      { text: { en: 'What is the most abundant element in the universe?', ru: 'Самый распространённый элемент во вселенной?' }, options: [{ en: 'Oxygen', ru: 'Кислород' }, { en: 'Carbon', ru: 'Углерод' }, { en: 'Hydrogen', ru: 'Водород' }, { en: 'Helium', ru: 'Гелий' }], correctIndex: 2 },
+      { text: { en: 'What is the atomic number of carbon?', ru: 'Атомный номер углерода?' }, options: [{ en: '4', ru: '4' }, { en: '6', ru: '6' }, { en: '8', ru: '8' }, { en: '12', ru: '12' }], correctIndex: 1 },
+      { text: { en: 'What is NaCl commonly known as?', ru: 'NaCl обычно называют?' }, options: [{ en: 'Sugar', ru: 'Сахар' }, { en: 'Salt', ru: 'Соль' }, { en: 'Baking soda', ru: 'Сода' }, { en: 'Vinegar', ru: 'Уксус' }], correctIndex: 1 },
+      { text: { en: 'What gas do humans need to breathe?', ru: 'Какой газ нужен людям для дыхания?' }, options: [{ en: 'Nitrogen', ru: 'Азот' }, { en: 'Carbon dioxide', ru: 'Углекислый газ' }, { en: 'Oxygen', ru: 'Кислород' }, { en: 'Hydrogen', ru: 'Водород' }], correctIndex: 2 },
+      { text: { en: 'What is the pH of pure water?', ru: 'pH чистой воды?' }, options: [{ en: '0', ru: '0' }, { en: '5', ru: '5' }, { en: '7', ru: '7' }, { en: '14', ru: '14' }], correctIndex: 2 },
+      { text: { en: 'What is the lightest element?', ru: 'Самый лёгкий элемент?' }, options: [{ en: 'Helium', ru: 'Гелий' }, { en: 'Hydrogen', ru: 'Водород' }, { en: 'Lithium', ru: 'Литий' }, { en: 'Carbon', ru: 'Углерод' }], correctIndex: 1 },
+      { text: { en: 'What is Ozone made of?', ru: 'Из чего состоит озон?' }, options: [{ en: '2 oxygen atoms', ru: '2 атома кислорода' }, { en: '3 oxygen atoms', ru: '3 атома кислорода' }, { en: '1 oxygen + 1 carbon', ru: '1 кислород + 1 углерод' }, { en: '2 nitrogen atoms', ru: '2 атома азота' }], correctIndex: 1 },
+      { text: { en: 'What is the chemical symbol for iron?', ru: 'Символ железа?' }, options: [{ en: 'Ir', ru: 'Ir' }, { en: 'Fe', ru: 'Fe' }, { en: 'In', ru: 'In' }, { en: 'Io', ru: 'Io' }], correctIndex: 1 },
+      { text: { en: 'What type of bond shares electrons?', ru: 'Какая связь делит электроны?' }, options: [{ en: 'Ionic', ru: 'Ионная' }, { en: 'Covalent', ru: 'Ковалентная' }, { en: 'Metallic', ru: 'Металлическая' }, { en: 'Hydrogen', ru: 'Водородная' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 20. FAMOUS PEOPLE — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'famous-people',
+    title: { en: 'Famous People', ru: 'Известные люди' },
+    description: { en: 'Scientists, leaders, artists, and innovators.', ru: 'Учёные, лидеры, художники, новаторы.' },
+    category: { en: 'History', ru: 'История' },
+    difficulty: 'medium',
+    icon: '👤',
+    color: '#a855f7',
+    questions: [
+      { text: { en: 'Who developed the theory of evolution?', ru: 'Кто создал теорию эволюции?' }, options: [{ en: 'Isaac Newton', ru: 'Ньютон' }, { en: 'Charles Darwin', ru: 'Чарльз Дарвин' }, { en: 'Albert Einstein', ru: 'Эйнштейн' }, { en: 'Gregor Mendel', ru: 'Мендель' }], correctIndex: 1 },
+      { text: { en: 'Who painted the ceiling of the Sistine Chapel?', ru: 'Кто расписал потолок Сикстинской капеллы?' }, options: [{ en: 'Leonardo da Vinci', ru: 'Леонардо да Винчи' }, { en: 'Raphael', ru: 'Рафаэль' }, { en: 'Michelangelo', ru: 'Микеланджело' }, { en: 'Donatello', ru: 'Донателло' }], correctIndex: 2 },
+      { text: { en: 'Who founded Microsoft?', ru: 'Кто основал Microsoft?' }, options: [{ en: 'Steve Jobs', ru: 'Стив Джобс' }, { en: 'Bill Gates', ru: 'Билл Гейтс' }, { en: 'Mark Zuckerberg', ru: 'Цукерберг' }, { en: 'Larry Page', ru: 'Ларри Пейдж' }], correctIndex: 1 },
+      { text: { en: 'Who wrote "The Origin of Species"?', ru: 'Кто написал "Происхождение видов"?' }, options: [{ en: 'Charles Darwin', ru: 'Дарвин' }, { en: 'Karl Marx', ru: 'Маркс' }, { en: 'Sigmund Freud', ru: 'Фрейд' }, { en: 'Albert Einstein', ru: 'Эйнштейн' }], correctIndex: 0 },
+      { text: { en: 'Who was the first man in space?', ru: 'Кто первым полетел в космос?' }, options: [{ en: 'Neil Armstrong', ru: 'Армстронг' }, { en: 'Yuri Gagarin', ru: 'Юрий Гагарин' }, { en: 'Buzz Aldrin', ru: 'Олдрин' }, { en: 'John Glenn', ru: 'Гленн' }], correctIndex: 1 },
+      { text: { en: 'Who composed "Symphony No. 9"?', ru: 'Кто написал "Симфонию №9"?' }, options: [{ en: 'Mozart', ru: 'Моцарт' }, { en: 'Beethoven', ru: 'Бетховен' }, { en: 'Bach', ru: 'Бах' }, { en: 'Chopin', ru: 'Шопен' }], correctIndex: 1 },
+      { text: { en: 'Who is known as the "Father of Computers"?', ru: 'Кого называют "отцом компьютеров"?' }, options: [{ en: 'Alan Turing', ru: 'Алан Тьюринг' }, { en: 'Charles Babbage', ru: 'Чарльз Бэббидж' }, { en: 'Bill Gates', ru: 'Гейтс' }, { en: 'Steve Wozniak', ru: 'Возняк' }], correctIndex: 1 },
+      { text: { en: 'Who discovered penicillin?', ru: 'Кто открыл пенициллин?' }, options: [{ en: 'Louis Pasteur', ru: 'Пастер' }, { en: 'Alexander Fleming', ru: 'Александр Флеминг' }, { en: 'Marie Curie', ru: 'Мария Кюри' }, { en: 'Isaac Newton', ru: 'Ньютон' }], correctIndex: 1 },
+      { text: { en: 'Who was the leader of the civil rights movement in the US?', ru: 'Кто был лидером движения за гражданские права в США?' }, options: [{ en: 'Malcolm X', ru: 'Малкольм Икс' }, { en: 'Martin Luther King Jr.', ru: 'Мартин Лютер Кинг' }, { en: 'Rosa Parks', ru: 'Роза Паркс' }, { en: 'Nelson Mandela', ru: 'Мандела' }], correctIndex: 1 },
+      { text: { en: 'Who invented the telephone?', ru: 'Кто изобрёл телефон?' }, options: [{ en: 'Thomas Edison', ru: 'Эдисон' }, { en: 'Alexander Graham Bell', ru: 'Александр Белл' }, { en: 'Nikola Tesla', ru: 'Тесла' }, { en: 'Guglielmo Marconi', ru: 'Маркони' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 21. INVENTIONS — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'inventions',
+    title: { en: 'Inventions', ru: 'Изобретения' },
+    description: { en: 'Who invented what and when.', ru: 'Кто что изобрёл и когда.' },
+    category: { en: 'History', ru: 'История' },
+    difficulty: 'medium',
+    icon: '💡',
+    color: '#eab308',
+    questions: [
+      { text: { en: 'Who invented the light bulb?', ru: 'Кто изобрёл лампочку?' }, options: [{ en: 'Nikola Tesla', ru: 'Тесла' }, { en: 'Thomas Edison', ru: 'Эдисон' }, { en: 'Benjamin Franklin', ru: 'Франклин' }, { en: 'Alexander Bell', ru: 'Белл' }], correctIndex: 1 },
+      { text: { en: 'In which year was the first iPhone released?', ru: 'Когда вышел первый iPhone?' }, options: [{ en: '2005', ru: '2005' }, { en: '2007', ru: '2007' }, { en: '2009', ru: '2009' }, { en: '2011', ru: '2011' }], correctIndex: 1 },
+      { text: { en: 'Who invented the World Wide Web?', ru: 'Кто изобрёл WWW?' }, options: [{ en: 'Bill Gates', ru: 'Гейтс' }, { en: 'Steve Jobs', ru: 'Джобс' }, { en: 'Tim Berners-Lee', ru: 'Тим Бернерс-Ли' }, { en: 'Vint Cerf', ru: 'Винт Серф' }], correctIndex: 2 },
+      { text: { en: 'Who invented the printing press?', ru: 'Кто изобрёл печатный станок?' }, options: [{ en: 'Leonardo da Vinci', ru: 'Леонардо' }, { en: 'Johannes Gutenberg', ru: 'Гутенберг' }, { en: 'Galileo', ru: 'Галилей' }, { en: 'Isaac Newton', ru: 'Ньютон' }], correctIndex: 1 },
+      { text: { en: 'Who invented the airplane?', ru: 'Кто изобрёл самолёт?' }, options: [{ en: 'Wright Brothers', ru: 'Братья Райт' }, { en: 'Amelia Earhart', ru: 'Эрхарт' }, { en: 'Charles Lindbergh', ru: 'Линдберг' }, { en: 'Howard Hughes', ru: 'Хьюз' }], correctIndex: 0 },
+      { text: { en: 'Who invented penicillin?', ru: 'Кто открыл пенициллин?' }, options: [{ en: 'Louis Pasteur', ru: 'Пастер' }, { en: 'Alexander Fleming', ru: 'Флеминг' }, { en: 'Marie Curie', ru: 'Кюри' }, { en: 'Isaac Newton', ru: 'Ньютон' }], correctIndex: 1 },
+      { text: { en: 'Who invented the telephone?', ru: 'Кто изобрёл телефон?' }, options: [{ en: 'Thomas Edison', ru: 'Эдисон' }, { en: 'Alexander Graham Bell', ru: 'Белл' }, { en: 'Nikola Tesla', ru: 'Тесла' }, { en: 'Guglielmo Marconi', ru: 'Маркони' }], correctIndex: 1 },
+      { text: { en: 'Who invented dynamite?', ru: 'Кто изобрёл динамит?' }, options: [{ en: 'Alfred Nobel', ru: 'Альфред Нобель' }, { en: 'Albert Einstein', ru: 'Эйнштейн' }, { en: 'Marie Curie', ru: 'Кюри' }, { en: 'Dmitri Mendeleev', ru: 'Менделеев' }], correctIndex: 0 },
+      { text: { en: 'Who invented the radio?', ru: 'Кто изобрёл радио?' }, options: [{ en: 'Thomas Edison', ru: 'Эдисон' }, { en: 'Nikola Tesla', ru: 'Тесла' }, { en: 'Guglielmo Marconi', ru: 'Маркони' }, { en: 'Alexander Bell', ru: 'Белл' }], correctIndex: 2 },
+      { text: { en: 'Who invented the steam engine?', ru: 'Кто изобрёл паровой двигатель?' }, options: [{ en: 'James Watt', ru: 'Джеймс Уатт' }, { en: 'Thomas Newcomen', ru: 'Ньюкомен' }, { en: 'George Stephenson', ru: 'Стефенсон' }, { en: 'Henry Ford', ru: 'Форд' }], correctIndex: 0 },
+    ],
+  },
+
+  // ============================================================
+  // 22. CARS — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'cars-trivia',
+    title: { en: 'Cars & Vehicles', ru: 'Машины' },
+    description: { en: 'Car brands, models, and automotive history.', ru: 'Марки, модели и история авто.' },
+    category: { en: 'Technology', ru: 'Технологии' },
+    difficulty: 'medium',
+    icon: '🚗',
+    color: '#ef4444',
+    questions: [
+      { text: { en: 'Which country is Ferrari from?', ru: 'Из какой страны Ferrari?' }, options: [{ en: 'Germany', ru: 'Германия' }, { en: 'Italy', ru: 'Италия' }, { en: 'France', ru: 'Франция' }, { en: 'USA', ru: 'США' }], correctIndex: 1 },
+      { text: { en: 'Who founded Ford Motor Company?', ru: 'Кто основал Ford?' }, options: [{ en: 'Henry Ford', ru: 'Генри Форд' }, { en: 'Edsel Ford', ru: 'Эдсел Форд' }, { en: 'William Durant', ru: 'Дюран' }, { en: 'Walter Chrysler', ru: 'Крайслер' }], correctIndex: 0 },
+      { text: { en: 'What does BMW stand for (in German)?', ru: 'Что означает BMW?' }, options: [{ en: 'Bavarian Motor Works', ru: 'Баварские моторы' }, { en: 'British Motor Works', ru: 'Британские моторы' }, { en: 'Best Motor World', ru: 'Лучшие моторы' }, { en: 'Bavarian Machine Works', ru: 'Баварские машины' }], correctIndex: 0 },
+      { text: { en: 'Which company makes the "Corolla"?', ru: 'Кто делает "Corolla"?' }, options: [{ en: 'Honda', ru: 'Honda' }, { en: 'Toyota', ru: 'Toyota' }, { en: 'Nissan', ru: 'Nissan' }, { en: 'Mazda', ru: 'Mazda' }], correctIndex: 1 },
+      { text: { en: 'What does EV stand for?', ru: 'Что означает EV?' }, options: [{ en: 'Engine Vehicle', ru: 'Engine Vehicle' }, { en: 'Electric Vehicle', ru: 'Electric Vehicle' }, { en: 'Eco Vehicle', ru: 'Eco Vehicle' }, { en: 'Energy Van', ru: 'Energy Van' }], correctIndex: 1 },
+      { text: { en: 'Which country is Volvo from?', ru: 'Из какой страны Volvo?' }, options: [{ en: 'Germany', ru: 'Германия' }, { en: 'Sweden', ru: 'Швеция' }, { en: 'Norway', ru: 'Норвегия' }, { en: 'Denmark', ru: 'Дания' }], correctIndex: 1 },
+      { text: { en: 'Which company makes the "Mustang"?', ru: 'Кто делает "Mustang"?' }, options: [{ en: 'Chevrolet', ru: 'Chevrolet' }, { en: 'Ford', ru: 'Ford' }, { en: 'Dodge', ru: 'Dodge' }, { en: 'GM', ru: 'GM' }], correctIndex: 1 },
+      { text: { en: 'What is the most produced car ever?', ru: 'Самая массовая машина в истории?' }, options: [{ en: 'VW Beetle', ru: 'VW Жук' }, { en: 'Ford Model T', ru: 'Ford T' }, { en: 'Toyota Corolla', ru: 'Toyota Corolla' }, { en: 'Honda Civic', ru: 'Honda Civic' }], correctIndex: 2 },
+      { text: { en: 'Which company makes the "911"?', ru: 'Кто делает "911"?' }, options: [{ en: 'Ferrari', ru: 'Ferrari' }, { en: 'Lamborghini', ru: 'Lamborghini' }, { en: 'Porsche', ru: 'Porsche' }, { en: 'Audi', ru: 'Audi' }], correctIndex: 2 },
+      { text: { en: 'Who invented the first car?', ru: 'Кто изобрёл первый автомобиль?' }, options: [{ en: 'Henry Ford', ru: 'Форд' }, { en: 'Karl Benz', ru: 'Карл Бенц' }, { en: 'Nicolas-Joseph Cugnot', ru: 'Кюньо' }, { en: 'Gottlieb Daimler', ru: 'Даймлер' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 23. INTERNET CULTURE — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'internet-culture',
+    title: { en: 'Internet Culture', ru: 'Интернет-культура' },
+    description: { en: 'Memes, viral trends, and online phenomena.', ru: 'Мемы, тренды и феномены интернета.' },
+    category: { en: 'Technology', ru: 'Технологии' },
+    difficulty: 'easy',
+    icon: '🌐',
+    color: '#22d3ee',
+    questions: [
+      { text: { en: 'What does "URL" stand for?', ru: 'Что означает URL?' }, options: [{ en: 'Universal Resource Locator', ru: 'Universal Resource Locator' }, { en: 'Uniform Resource Locator', ru: 'Uniform Resource Locator' }, { en: 'United Resource Link', ru: 'United Resource Link' }, { en: 'Universal Reading Link', ru: 'Universal Reading Link' }], correctIndex: 1 },
+      { text: { en: 'Which company owns Instagram?', ru: 'Кому принадлежит Instagram?' }, options: [{ en: 'Google', ru: 'Google' }, { en: 'Twitter', ru: 'Twitter' }, { en: 'Meta (Facebook)', ru: 'Meta (Facebook)' }, { en: 'Microsoft', ru: 'Microsoft' }], correctIndex: 2 },
+      { text: { en: 'What year was YouTube founded?', ru: 'В каком году основан YouTube?' }, options: [{ en: '2003', ru: '2003' }, { en: '2005', ru: '2005' }, { en: '2007', ru: '2007' }, { en: '2009', ru: '2009' }], correctIndex: 1 },
+      { text: { en: 'What does "HTTP" stand for?', ru: 'Что означает HTTP?' }, options: [{ en: 'HyperText Transfer Protocol', ru: 'HyperText Transfer Protocol' }, { en: 'High Tech Transfer Process', ru: 'High Tech Transfer Process' }, { en: 'HyperText Transmission Protocol', ru: 'HyperText Transmission Protocol' }, { en: 'Home Tool Transfer Protocol', ru: 'Home Tool Transfer Protocol' }], correctIndex: 0 },
+      { text: { en: 'Which platform is known for short videos and "TikTok dances"?', ru: 'Какая платформа известна короткими видео и танцами?' }, options: [{ en: 'Vine', ru: 'Vine' }, { en: 'TikTok', ru: 'TikTok' }, { en: 'Instagram', ru: 'Instagram' }, { en: 'YouTube', ru: 'YouTube' }], correctIndex: 1 },
+      { text: { en: 'What is a "meme"?', ru: 'Что такое "мем"?' }, options: [{ en: 'A type of computer virus', ru: 'Тип вируса' }, { en: 'A viral idea or content', ru: 'Виральная идея или контент' }, { en: 'A programming language', ru: 'Язык программирования' }, { en: 'A type of website', ru: 'Тип сайта' }], correctIndex: 1 },
+      { text: { en: 'Who created Linux?', ru: 'Кто создал Linux?' }, options: [{ en: 'Bill Gates', ru: 'Гейтс' }, { en: 'Steve Jobs', ru: 'Джобс' }, { en: 'Linus Torvalds', ru: 'Линус Торвальдс' }, { en: 'Richard Stallman', ru: 'Столлман' }], correctIndex: 2 },
+      { text: { en: 'What does "AI" stand for?', ru: 'Что означает AI?' }, options: [{ en: 'Auto Input', ru: 'Auto Input' }, { en: 'Artificial Intelligence', ru: 'Artificial Intelligence' }, { en: 'Advanced Internet', ru: 'Advanced Internet' }, { en: 'Automated Index', ru: 'Automated Index' }], correctIndex: 1 },
+      { text: { en: 'What is the most used search engine?', ru: 'Самая популярная поисковая система?' }, options: [{ en: 'Bing', ru: 'Bing' }, { en: 'Yahoo', ru: 'Yahoo' }, { en: 'Google', ru: 'Google' }, { en: 'DuckDuckGo', ru: 'DuckDuckGo' }], correctIndex: 2 },
+      { text: { en: 'What does "www" stand for?', ru: 'Что означает www?' }, options: [{ en: 'World Wide Web', ru: 'World Wide Web' }, { en: 'Web World Wide', ru: 'Web World Wide' }, { en: 'Wide World Web', ru: 'Wide World Web' }, { en: 'World Web Wide', ru: 'World Web Wide' }], correctIndex: 0 },
+    ],
+  },
+
+  // ============================================================
+  // 24. WORLD WONDERS — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'world-wonders',
+    title: { en: 'World Wonders', ru: 'Чудеса света' },
+    description: { en: 'Famous landmarks and natural wonders.', ru: 'Знаменитые достопримечательности и чудеса природы.' },
+    category: { en: 'Geography', ru: 'География' },
+    difficulty: 'medium',
+    icon: '🗿',
+    color: '#f97316',
+    questions: [
+      { text: { en: 'Where is the Eiffel Tower located?', ru: 'Где находится Эйфелева башня?' }, options: [{ en: 'London', ru: 'Лондон' }, { en: 'Rome', ru: 'Рим' }, { en: 'Paris', ru: 'Париж' }, { en: 'Madrid', ru: 'Мадрид' }], correctIndex: 2 },
+      { text: { en: 'Where are the Pyramids of Giza?', ru: 'Где пирамиды Гизы?' }, options: [{ en: 'Iraq', ru: 'Ирак' }, { en: 'Egypt', ru: 'Египет' }, { en: 'Mexico', ru: 'Мексика' }, { en: 'Sudan', ru: 'Судан' }], correctIndex: 1 },
+      { text: { en: 'Where is the Great Wall visible from?', ru: 'Откуда видна Великая Китайская стена?' }, options: [{ en: 'Space (with naked eye)', ru: 'Из космоса (невооружённым глазом)' }, { en: 'Moon', ru: 'С Луны' }, { en: 'Mount Everest', ru: 'С Эвереста' }, { en: 'Satellite only', ru: 'Только со спутника' }], correctIndex: 0, explanation: { en: 'Visible from low Earth orbit, not from the Moon as myth claims.', ru: 'Видна с низкой околоземной орбиты, но не с Луны, как говорит миф.' } },
+      { text: { en: 'Where is Machu Picchu?', ru: 'Где Мачу-Пикчу?' }, options: [{ en: 'Mexico', ru: 'Мексика' }, { en: 'Peru', ru: 'Перу' }, { en: 'Bolivia', ru: 'Боливия' }, { en: 'Chile', ru: 'Чили' }], correctIndex: 1 },
+      { text: { en: 'Where is the Taj Mahal?', ru: 'Где Тадж-Махал?' }, options: [{ en: 'Pakistan', ru: 'Пакистан' }, { en: 'India', ru: 'Индия' }, { en: 'Iran', ru: 'Иран' }, { en: 'Bangladesh', ru: 'Бангладеш' }], correctIndex: 1 },
+      { text: { en: 'Where is the Colosseum?', ru: 'Где Колизей?' }, options: [{ en: 'Athens', ru: 'Афины' }, { en: 'Rome', ru: 'Рим' }, { en: 'Cairo', ru: 'Каир' }, { en: 'Istanbul', ru: 'Стамбул' }], correctIndex: 1 },
+      { text: { en: 'Where is the Statue of Liberty?', ru: 'Где Статуя Свободы?' }, options: [{ en: 'Los Angeles', ru: 'Лос-Анджелес' }, { en: 'Washington DC', ru: 'Вашингтон' }, { en: 'New York', ru: 'Нью-Йорк' }, { en: 'Chicago', ru: 'Чикаго' }], correctIndex: 2 },
+      { text: { en: 'Where is the Grand Canyon?', ru: 'Где Гранд-Каньон?' }, options: [{ en: 'Arizona, USA', ru: 'Аризона, США' }, { en: 'Nevada, USA', ru: 'Невада, США' }, { en: 'Utah, USA', ru: 'Юта, США' }, { en: 'Texas, USA', ru: 'Техас, США' }], correctIndex: 0 },
+      { text: { en: 'Where are the Northern Lights (Aurora Borealis) most visible?', ru: 'Где лучше всего видно Северное сияние?' }, options: [{ en: 'Near equator', ru: 'У экватора' }, { en: 'Near poles', ru: 'У полюсов' }, { en: 'In deserts', ru: 'В пустынях' }, { en: 'In jungles', ru: 'В джунглях' }], correctIndex: 1 },
+      { text: { en: 'Where is the Great Barrier Reef?', ru: 'Где Большой Барьерный риф?' }, options: [{ en: 'Brazil', ru: 'Бразилия' }, { en: 'Australia', ru: 'Австралия' }, { en: 'Indonesia', ru: 'Индонезия' }, { en: 'Philippines', ru: 'Филиппины' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 25. ANIMALS — НОВЫЙ (отдельно от Nature)
+  // ============================================================
+  {
+    slug: 'animals-trivia',
+    title: { en: 'Animals', ru: 'Животные' },
+    description: { en: 'Mammals, birds, reptiles, and marine life.', ru: 'Млекопитающие, птицы, рептилии, морские.' },
+    category: { en: 'Nature', ru: 'Природа' },
+    difficulty: 'easy',
+    icon: '🐾',
+    color: '#84cc16',
+    questions: [
+      { text: { en: 'What is the largest mammal?', ru: 'Самое крупное млекопитающее?' }, options: [{ en: 'Elephant', ru: 'Слон' }, { en: 'Blue Whale', ru: 'Синий кит' }, { en: 'Giraffe', ru: 'Жираф' }, { en: 'Hippo', ru: 'Бегемот' }], correctIndex: 1 },
+      { text: { en: 'How many legs does a spider have?', ru: 'Сколько ног у паука?' }, options: [{ en: '6', ru: '6' }, { en: '8', ru: '8' }, { en: '10', ru: '10' }, { en: '12', ru: '12' }], correctIndex: 1 },
+      { text: { en: 'Which bird cannot fly?', ru: 'Какая птица не умеет летать?' }, options: [{ en: 'Sparrow', ru: 'Воробей' }, { en: 'Penguin', ru: 'Пингвин' }, { en: 'Eagle', ru: 'Орёл' }, { en: 'Robin', ru: 'Малиновка' }], correctIndex: 1 },
+      { text: { en: 'What is the fastest land animal?', ru: 'Самое быстрое наземное животное?' }, options: [{ en: 'Lion', ru: 'Лев' }, { en: 'Cheetah', ru: 'Гепард' }, { en: 'Horse', ru: 'Лошадь' }, { en: 'Antelope', ru: 'Антилопа' }], correctIndex: 1 },
+      { text: { en: 'Which animal is known as "man\'s best friend"?', ru: 'Какое животное — "лучший друг человека"?' }, options: [{ en: 'Cat', ru: 'Кошка' }, { en: 'Dog', ru: 'Собака' }, { en: 'Horse', ru: 'Лошадь' }, { en: 'Cow', ru: 'Корова' }], correctIndex: 1 },
+      { text: { en: 'How many hearts does an octopus have?', ru: 'Сколько сердец у осьминога?' }, options: [{ en: '1', ru: '1' }, { en: '2', ru: '2' }, { en: '3', ru: '3' }, { en: '4', ru: '4' }], correctIndex: 2 },
+      { text: { en: 'Which animal sleeps the most per day?', ru: 'Какое животное спит больше всего?' }, options: [{ en: 'Cat', ru: 'Кошка' }, { en: 'Sloth', ru: 'Ленивец' }, { en: 'Koala', ru: 'Коала' }, { en: 'Lion', ru: 'Лев' }], correctIndex: 1, explanation: { en: 'Sloths sleep up to 20 hours per day.', ru: 'Ленивцы спят до 20 часов в сутки.' } },
+      { text: { en: 'What is a baby kangaroo called?', ru: 'Как называется детёныш кенгуру?' }, options: [{ en: 'Cub', ru: 'Куб' }, { en: 'Joey', ru: 'Джоуи' }, { en: 'Kit', ru: 'Кит' }, { en: 'Pup', ru: 'Пап' }], correctIndex: 1 },
+      { text: { en: 'Which animal can change color?', ru: 'Какое животное меняет цвет?' }, options: [{ en: 'Frog', ru: 'Лягушка' }, { en: 'Chameleon', ru: 'Хамелеон' }, { en: 'Snake', ru: 'Змея' }, { en: 'Iguana', ru: 'Игуана' }], correctIndex: 1 },
+      { text: { en: 'What is the tallest animal?', ru: 'Самое высокое животное?' }, options: [{ en: 'Elephant', ru: 'Слон' }, { en: 'Giraffe', ru: 'Жираф' }, { en: 'Horse', ru: 'Лошадь' }, { en: 'Camel', ru: 'Верблюд' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 26. BRAIN TEASERS — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'brain-teasers',
+    title: { en: 'Brain Teasers', ru: 'Головоломки' },
+    description: { en: 'Logic puzzles and riddles.', ru: 'Логические задачи и загадки.' },
+    category: { en: 'Mixed', ru: 'Разное' },
+    difficulty: 'hard',
+    icon: '🧩',
+    color: '#8b5cf6',
+    questions: [
+      { text: { en: 'I am an odd number. Remove a letter and I become even. What am I?', ru: 'Я нечётное. Убери букву — стану чётным. Что я?' }, options: [{ en: 'Three', ru: 'Три' }, { en: 'Five', ru: 'Пять' }, { en: 'Seven', ru: 'Семь' }, { en: 'Nine', ru: 'Девять' }], correctIndex: 2, explanation: { en: 'Remove "s" from "seven" → "even".', ru: 'Убери "s" из "seven" → "even".' } },
+      { text: { en: 'What has keys but can\'t open doors?', ru: 'Что имеет клавиши, но не открывает двери?' }, options: [{ en: 'A map', ru: 'Карта' }, { en: 'A piano', ru: 'Пианино' }, { en: 'A computer', ru: 'Компьютер' }, { en: 'A clock', ru: 'Часы' }], correctIndex: 1 },
+      { text: { en: 'What gets wetter as it dries?', ru: 'Что становится мокрее, когда сушит?' }, options: [{ en: 'A towel', ru: 'Полотенце' }, { en: 'A sponge', ru: 'Губка' }, { en: 'A hair dryer', ru: 'Фен' }, { en: 'The sun', ru: 'Солнце' }], correctIndex: 0 },
+      { text: { en: 'I have hands but cannot clap. What am I?', ru: 'У меня есть руки, но я не могу хлопать. Что я?' }, options: [{ en: 'A clock', ru: 'Часы' }, { en: 'A statue', ru: 'Статуя' }, { en: 'A tree', ru: 'Дерево' }, { en: 'A doll', ru: 'Кукла' }], correctIndex: 0 },
+      { text: { en: 'What goes up but never comes down?', ru: 'Что только растёт и никогда не уменьшается?' }, options: [{ en: 'A balloon', ru: 'Шарик' }, { en: 'Age', ru: 'Возраст' }, { en: 'Temperature', ru: 'Температура' }, { en: 'The sun', ru: 'Солнце' }], correctIndex: 1 },
+      { text: { en: 'What has a head and a tail but no body?', ru: 'У чего есть голова и хвост, но нет тела?' }, options: [{ en: 'A snake', ru: 'Змея' }, { en: 'A coin', ru: 'Монета' }, { en: 'A fish', ru: 'Рыба' }, { en: 'A comet', ru: 'Комета' }], correctIndex: 1 },
+      { text: { en: 'The more you take, the more you leave behind. What are they?', ru: 'Чем больше берёшь, тем больше оставляешь. Что это?' }, options: [{ en: 'Footsteps', ru: 'Шаги' }, { en: 'Memories', ru: 'Воспоминания' }, { en: 'Photos', ru: 'Фото' }, { en: 'Money', ru: 'Деньги' }], correctIndex: 0 },
+      { text: { en: 'What can travel around the world while staying in a corner?', ru: 'Что может объехать мир, оставаясь в углу?' }, options: [{ en: 'Light', ru: 'Свет' }, { en: 'A stamp', ru: 'Марка' }, { en: 'A flag', ru: 'Флаг' }, { en: 'A book', ru: 'Книга' }], correctIndex: 1 },
+      { text: { en: 'What has many keys but can\'t open a single lock?', ru: 'У чего много клавиш, но ни один замок не откроет?' }, options: [{ en: 'A piano', ru: 'Пианино' }, { en: 'A keyboard', ru: 'Клавиатура' }, { en: 'A map', ru: 'Карта' }, { en: 'All of the above', ru: 'Все варианты' }], correctIndex: 3 },
+      { text: { en: 'I am not alive, but I grow. I don\'t have lungs, but I need air. What am I?', ru: 'Я не живой, но расту. Нет лёгких, но нужен воздух. Что я?' }, options: [{ en: 'A plant', ru: 'Растение' }, { en: 'Fire', ru: 'Огонь' }, { en: 'A cloud', ru: 'Облако' }, { en: 'A virus', ru: 'Вирус' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 27. GEOGRAPHY RUSSIA — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'geography-russia',
+    title: { en: 'Geography of Russia', ru: 'География России' },
+    description: { en: 'Cities, rivers, mountains of Russia.', ru: 'Города, реки, горы России.' },
+    category: { en: 'Geography', ru: 'География' },
+    difficulty: 'medium',
+    icon: '🗺️',
+    color: '#dc2626',
+    questions: [
+      { text: { en: 'What is the longest river in Russia?', ru: 'Самая длинная река России?' }, options: [{ en: 'Volga', ru: 'Волга' }, { en: 'Lena', ru: 'Лена' }, { en: 'Ob', ru: 'Обь' }, { en: 'Yenisei', ru: 'Енисей' }], correctIndex: 1, explanation: { en: 'Lena is 4400 km. Volga is the longest in Europe.', ru: 'Лена — 4400 км. Волга — самая длинная в Европе.' } },
+      { text: { en: 'What is the deepest lake in Russia (and the world)?', ru: 'Самое глубокое озеро России и мира?' }, options: [{ en: 'Ladoga', ru: 'Ладога' }, { en: 'Baikal', ru: 'Байкал' }, { en: 'Onega', ru: 'Онега' }, { en: 'Caspian Sea', ru: 'Каспий' }], correctIndex: 1 },
+      { text: { en: 'What mountain range divides Europe and Asia?', ru: 'Какой хребет делит Европу и Азию?' }, options: [{ en: 'Caucasus', ru: 'Кавказ' }, { en: 'Urals', ru: 'Урал' }, { en: 'Altai', ru: 'Алтай' }, { en: 'Sayan', ru: 'Саяны' }], correctIndex: 1 },
+      { text: { en: 'What is the capital of Russia?', ru: 'Столица России?' }, options: [{ en: 'Saint Petersburg', ru: 'Санкт-Петербург' }, { en: 'Moscow', ru: 'Москва' }, { en: 'Kazan', ru: 'Казань' }, { en: 'Novosibirsk', ru: 'Новосибирск' }], correctIndex: 1 },
+      { text: { en: 'Which city was the capital before Moscow?', ru: 'Какой город был столицей до Москвы?' }, options: [{ en: 'Kiev', ru: 'Киев' }, { en: 'Saint Petersburg', ru: 'Санкт-Петербург' }, { en: 'Vladimir', ru: 'Владимир' }, { en: 'Novgorod', ru: 'Новгород' }], correctIndex: 1 },
+      { text: { en: 'What is the largest city in Siberia?', ru: 'Самый большой город Сибири?' }, options: [{ en: 'Krasnoyarsk', ru: 'Красноярск' }, { en: 'Irkutsk', ru: 'Иркутск' }, { en: 'Novosibirsk', ru: 'Новосибирск' }, { en: 'Omsk', ru: 'Омск' }], correctIndex: 2 },
+      { text: { en: 'Russia spans how many time zones?', ru: 'Сколько часовых поясов в России?' }, options: [{ en: '7', ru: '7' }, { en: '9', ru: '9' }, { en: '11', ru: '11' }, { en: '13', ru: '13' }], correctIndex: 2 },
+      { text: { en: 'What is the highest mountain in Russia?', ru: 'Самая высокая гора России?' }, options: [{ en: 'Kazbek', ru: 'Казбек' }, { en: 'Elbrus', ru: 'Эльбрус' }, { en: 'Belukha', ru: 'Белуха' }, { en: 'Narodnaya', ru: 'Народная' }], correctIndex: 1 },
+      { text: { en: 'Which sea borders Russia to the east?', ru: 'Какое море на востоке России?' }, options: [{ en: 'Baltic', ru: 'Балтийское' }, { en: 'Black', ru: 'Чёрное' }, { en: 'Bering', ru: 'Берингово' }, { en: 'Caspian', ru: 'Каспийское' }], correctIndex: 2 },
+      { text: { en: 'Which city is known as the "Window to Europe"?', ru: 'Какой город называют "окном в Европу"?' }, options: [{ en: 'Moscow', ru: 'Москва' }, { en: 'Saint Petersburg', ru: 'Санкт-Петербург' }, { en: 'Kaliningrad', ru: 'Калининград' }, { en: 'Murmansk', ru: 'Мурманск' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 28. HISTORY XX CENTURY — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'history-xx-century',
+    title: { en: 'XX Century History', ru: 'XX век' },
+    description: { en: 'World Wars, Cold War, and modern history.', ru: 'Мировые войны, холодная война.' },
+    category: { en: 'History', ru: 'История' },
+    difficulty: 'hard',
+    icon: '🕰️',
+    color: '#0891b2',
+    questions: [
+      { text: { en: 'In which year did WWI begin?', ru: 'Когда началась Первая мировая?' }, options: [{ en: '1912', ru: '1912' }, { en: '1914', ru: '1914' }, { en: '1916', ru: '1916' }, { en: '1918', ru: '1918' }], correctIndex: 1 },
+      { text: { en: 'Who was the US President during most of WWII?', ru: 'Кто был президентом США во время ВМВ?' }, options: [{ en: 'Truman', ru: 'Трумэн' }, { en: 'Eisenhower', ru: 'Эйзенхауэр' }, { en: 'Roosevelt', ru: 'Рузвельт' }, { en: 'Kennedy', ru: 'Кеннеди' }], correctIndex: 2 },
+      { text: { en: 'When did the Berlin Wall fall?', ru: 'Когда пала Берлинская стена?' }, options: [{ en: '1987', ru: '1987' }, { en: '1989', ru: '1989' }, { en: '1991', ru: '1991' }, { en: '1993', ru: '1993' }], correctIndex: 1 },
+      { text: { en: 'When did the Soviet Union dissolve?', ru: 'Когда распался СССР?' }, options: [{ en: '1989', ru: '1989' }, { en: '1990', ru: '1990' }, { en: '1991', ru: '1991' }, { en: '1992', ru: '1992' }], correctIndex: 2 },
+      { text: { en: 'Who was the first man on the Moon?', ru: 'Кто первым ступил на Луну?' }, options: [{ en: 'Buzz Aldrin', ru: 'Олдрин' }, { en: 'Yuri Gagarin', ru: 'Гагарин' }, { en: 'Neil Armstrong', ru: 'Армстронг' }, { en: 'Michael Collins', ru: 'Коллинз' }], correctIndex: 2 },
+      { text: { en: 'What event triggered WWI?', ru: 'Что спровоцировало Первую мировую?' }, options: [{ en: 'Assassination of Archduke Franz Ferdinand', ru: 'Убийство эрцгерцога Фердинанда' }, { en: 'Pearl Harbor attack', ru: 'Атака на Перл-Харбор' }, { en: 'Russian Revolution', ru: 'Русская революция' }, { en: 'Treaty of Versailles', ru: 'Версальский договор' }], correctIndex: 0 },
+      { text: { en: 'When was the United Nations founded?', ru: 'Когда основана ООН?' }, options: [{ en: '1943', ru: '1943' }, { en: '1945', ru: '1945' }, { en: '1947', ru: '1947' }, { en: '1949', ru: '1949' }], correctIndex: 1 },
+      { text: { en: 'Who led India to independence in 1947?', ru: 'Кто привёл Индию к независимости в 1947?' }, options: [{ en: 'Nehru', ru: 'Неру' }, { en: 'Mahatma Gandhi', ru: 'Ганди' }, { en: 'Patel', ru: 'Патель' }, { en: 'Bose', ru: 'Бос' }], correctIndex: 1 },
+      { text: { en: 'What was the Cold War primarily about?', ru: 'Чем была холодная война?' }, options: [{ en: 'USA vs USSR', ru: 'США против СССР' }, { en: 'USA vs China', ru: 'США против Китая' }, { en: 'Germany vs France', ru: 'Германия против Франции' }, { en: 'North vs South Korea', ru: 'Северная против Южной Кореи' }], correctIndex: 0 },
+      { text: { en: 'When did the Cuban Missile Crisis happen?', ru: 'Когда был Карибский кризис?' }, options: [{ en: '1960', ru: '1960' }, { en: '1962', ru: '1962' }, { en: '1964', ru: '1964' }, { en: '1966', ru: '1966' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 29. ENGLISH WORDS — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'english-words',
+    title: { en: 'English Vocabulary', ru: 'Английские слова' },
+    description: { en: 'Test your English word knowledge.', ru: 'Проверь знание английских слов.' },
+    category: { en: 'Mixed', ru: 'Разное' },
+    difficulty: 'easy',
+    icon: '📝',
+    color: '#16a34a',
+    questions: [
+      { text: { en: 'What is a synonym for "happy"?', ru: 'Синоним к "happy"?' }, options: [{ en: 'Sad', ru: 'Sad' }, { en: 'Joyful', ru: 'Joyful' }, { en: 'Angry', ru: 'Angry' }, { en: 'Tired', ru: 'Tired' }], correctIndex: 1 },
+      { text: { en: 'What does "enormous" mean?', ru: 'Что означает "enormous"?' }, options: [{ en: 'Tiny', ru: 'Крошечный' }, { en: 'Huge', ru: 'Огромный' }, { en: 'Quiet', ru: 'Тихий' }, { en: 'Fast', ru: 'Быстрый' }], correctIndex: 1 },
+      { text: { en: 'What is the past tense of "go"?', ru: 'Прошедшее время от "go"?' }, options: [{ en: 'Goed', ru: 'Goed' }, { en: 'Went', ru: 'Went' }, { en: 'Gone', ru: 'Gone' }, { en: 'Going', ru: 'Going' }], correctIndex: 1 },
+      { text: { en: 'What is an antonym for "ancient"?', ru: 'Антоним к "ancient"?' }, options: [{ en: 'Old', ru: 'Old' }, { en: 'Modern', ru: 'Modern' }, { en: 'Historic', ru: 'Historic' }, { en: 'Classic', ru: 'Classic' }], correctIndex: 1 },
+      { text: { en: 'What does "brave" mean?', ru: 'Что означает "brave"?' }, options: [{ en: 'Scared', ru: 'Напуганный' }, { en: 'Courageous', ru: 'Смелый' }, { en: 'Weak', ru: 'Слабый' }, { en: 'Slow', ru: 'Медленный' }], correctIndex: 1 },
+      { text: { en: 'What is the plural of "child"?', ru: 'Множественное от "child"?' }, options: [{ en: 'Childs', ru: 'Childs' }, { en: 'Children', ru: 'Children' }, { en: 'Childes', ru: 'Childes' }, { en: 'Childer', ru: 'Childer' }], correctIndex: 1 },
+      { text: { en: 'What does "gorgeous" mean?', ru: 'Что означает "gorgeous"?' }, options: [{ en: 'Ugly', ru: 'Уродливый' }, { en: 'Beautiful', ru: 'Красивый' }, { en: 'Cheap', ru: 'Дешёвый' }, { en: 'Loud', ru: 'Громкий' }], correctIndex: 1 },
+      { text: { en: 'What is a synonym for "begin"?', ru: 'Синоним к "begin"?' }, options: [{ en: 'End', ru: 'End' }, { en: 'Start', ru: 'Start' }, { en: 'Stop', ru: 'Stop' }, { en: 'Pause', ru: 'Pause' }], correctIndex: 1 },
+      { text: { en: 'What does "rapid" mean?', ru: 'Что означает "rapid"?' }, options: [{ en: 'Slow', ru: 'Медленный' }, { en: 'Fast', ru: 'Быстрый' }, { en: 'Late', ru: 'Поздний' }, { en: 'Quiet', ru: 'Тихий' }], correctIndex: 1 },
+      { text: { en: 'What is the opposite of "victory"?', ru: 'Противоположность "victory"?' }, options: [{ en: 'Win', ru: 'Win' }, { en: 'Defeat', ru: 'Defeat' }, { en: 'Success', ru: 'Success' }, { en: 'Triumph', ru: 'Triumph' }], correctIndex: 1 },
+    ],
+  },
+
+  // ============================================================
+  // 30. FLAGS OF THE WORLD — НОВЫЙ
+  // ============================================================
+  {
+    slug: 'flags-world',
+    title: { en: 'Flags of the World', ru: 'Флаги мира' },
+    description: { en: 'Identify countries by their flag colors and patterns.', ru: 'Узнай страны по цветам и узорам флагов.' },
+    category: { en: 'Geography', ru: 'География' },
+    difficulty: 'medium',
+    icon: '🚩',
+    color: '#dc2626',
+    questions: [
+      { text: { en: 'Which country has a flag with a red maple leaf?', ru: 'У какой страны флаг с красным кленовым листом?' }, options: [{ en: 'USA', ru: 'США' }, { en: 'Canada', ru: 'Канада' }, { en: 'Mexico', ru: 'Мексика' }, { en: 'Brazil', ru: 'Бразилия' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with a red circle on white?', ru: 'У какой страны флаг с красным кругом на белом?' }, options: [{ en: 'China', ru: 'Китай' }, { en: 'Japan', ru: 'Япония' }, { en: 'Korea', ru: 'Корея' }, { en: 'Vietnam', ru: 'Вьетнам' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with blue and white stripes and a star?', ru: 'Синие и белые полосы со звездой?' }, options: [{ en: 'Greece', ru: 'Греция' }, { en: 'Israel', ru: 'Израиль' }, { en: 'Argentina', ru: 'Аргентина' }, { en: 'Honduras', ru: 'Гондурас' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with vertical green, white, red stripes?', ru: 'Вертикальные зелёная, белая, красная полосы?' }, options: [{ en: 'France', ru: 'Франция' }, { en: 'Italy', ru: 'Италия' }, { en: 'Ireland', ru: 'Ирландия' }, { en: 'Belgium', ru: 'Бельгия' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with a Union Jack in the corner?', ru: 'С Union Jack в углу?' }, options: [{ en: 'USA', ru: 'США' }, { en: 'Australia', ru: 'Австралия' }, { en: 'Canada', ru: 'Канада' }, { en: 'India', ru: 'Индия' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with yellow stars on red?', ru: 'Жёлтые звёзды на красном?' }, options: [{ en: 'Vietnam', ru: 'Вьетнам' }, { en: 'China', ru: 'Китай' }, { en: 'Turkey', ru: 'Турция' }, { en: 'Morocco', ru: 'Марокко' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with black, red, and gold horizontal stripes?', ru: 'Чёрные, красные, золотые горизонтальные полосы?' }, options: [{ en: 'Belgium', ru: 'Бельгия' }, { en: 'Germany', ru: 'Германия' }, { en: 'Spain', ru: 'Испания' }, { en: 'Netherlands', ru: 'Нидерланды' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with a white crescent and star on green?', ru: 'Белый полумесяц и звезда на зелёном?' }, options: [{ en: 'Turkey', ru: 'Турция' }, { en: 'Pakistan', ru: 'Пакистан' }, { en: 'Algeria', ru: 'Алжир' }, { en: 'Malaysia', ru: 'Малайзия' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with a blue cross on white?', ru: 'Синий крест на белом?' }, options: [{ en: 'Sweden', ru: 'Швеция' }, { en: 'Finland', ru: 'Финляндия' }, { en: 'Norway', ru: 'Норвегия' }, { en: 'Denmark', ru: 'Дания' }], correctIndex: 1 },
+      { text: { en: 'Which country has a flag with a yellow diamond on green?', ru: 'Жёлтый ромб на зелёном?' }, options: [{ en: 'Brazil', ru: 'Бразилия' }, { en: 'Argentina', ru: 'Аргентина' }, { en: 'Peru', ru: 'Перу' }, { en: 'Colombia', ru: 'Колумбия' }], correctIndex: 0 },
+    ],
+  },
 ];
 
 // Helper to get localized text
