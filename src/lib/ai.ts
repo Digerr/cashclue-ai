@@ -124,42 +124,40 @@ Return ONLY valid JSON. No markdown, no commentary, no code fences. Pure JSON ma
 
 function buildUserPrompt(input: HustleInput, theme: ThemeConfig): string {
   return `User profile:
-- Skills / interests: ${input.skills || 'not specified'}
-- Available time: ${input.hoursPerWeek || 'not specified'} hours/week
-- Starting budget: ${input.budget || '$0'}
+- Skills: ${input.skills || 'not specified'}
+- Time: ${input.hoursPerWeek || 'not specified'} h/week
+- Budget: ${input.budget || '$0'}
 - Goal: ${input.goal || 'make money'}
-- Risk tolerance: ${input.riskTolerance}
+- Risk: ${input.riskTolerance}
 
 Theme: ${theme.ideaFocus}
 
-Generate a plan with exactly 3 ideas. Each idea must have:
-- name (catchy, brandable, 2-4 words)
-- tagline (one-line hook, max 80 chars)
-- category (e.g. "Digital Product", "Service Business", "Content", "E-commerce", "SaaS", "Marketplace", "Community")
-- pitch (2-3 sentences explaining the play and why it works for this user)
-- monthlyIncomeRange: { min, max, currency: "USD" } — realistic after 3-6 months of effort
-- startupCost (USD, number)
+Generate a plan with exactly 3 ideas. Each idea:
+- name (2-4 words, brandable)
+- tagline (max 70 chars)
+- category
+- pitch (1 sentence)
+- monthlyIncomeRange: { min, max, currency: "USD" }
+- startupCost (number)
 - timeToFirstDollar (e.g. "1-2 weeks")
 - timeToProfitable (e.g. "2-3 months")
-- difficulty: "Easy" | "Medium" | "Hard"
-- scalability: "Low" | "Medium" | "High" | "Unlimited"
-- roadmap: array of 3 steps { title, description (1-2 sentences), duration }
-- keyResources: array of 4-6 specific tools/platforms/books
-- risks: array of 2-3 honest risks
-- monetizationModel (one sentence: how money actually flows)
-- unfairAdvantage (one sentence: why THIS user wins)
+- difficulty: "Easy"|"Medium"|"Hard"
+- scalability: "Low"|"Medium"|"High"|"Unlimited"
+- roadmap: 3 steps { title, description (1 short sentence), duration }
+- keyResources: 4 specific tools/platforms
+- risks: 2 short honest risks
+- monetizationModel (1 short sentence)
+- unfairAdvantage (1 short sentence)
 
-Also return:
-- executiveSummary: 3-4 sentence honest assessment of user's situation and best path
-- recommendedPick: index (0-2) of the idea they should start with
-- quickWins: array of 3 concrete things they can do THIS WEEK to make first $
-- longTermPlays: array of 2 plays for 6+ month wealth building
+Also:
+- executiveSummary (2 sentences)
+- recommendedPick: 0|1|2
+- quickWins: 3 short actions for THIS WEEK
+- longTermPlays: 2 short plays for 6+ months
 
-Return as JSON object with shape: { ideas: HustleIdea[], executiveSummary: string, recommendedPick: number, quickWins: string[], longTermPlays: string[] }
+JSON shape: { ideas: HustleIdea[], executiveSummary: string, recommendedPick: number, quickWins: string[], longTermPlays: string[] }
 
-ALL human-readable text values MUST be in ${LANG_NAMES[input.lang]}.
-
-ONLY return valid JSON. No markdown. No commentary before or after.`;
+ALL text values in ${LANG_NAMES[input.lang]}. Be FAST — finish under 4000 tokens. ONLY valid JSON, no markdown.`;
 }
 
 export async function generateHustlePlan(input: HustleInput): Promise<HustlePlan> {
@@ -172,8 +170,8 @@ export async function generateHustlePlan(input: HustleInput): Promise<HustlePlan
       { role: 'user', content: buildUserPrompt(input, theme) },
     ],
     thinking: { type: 'disabled' },
-    temperature: 0.85,
-    max_tokens: 12000,
+    temperature: 0.7,
+    max_tokens: 4000,
   });
 
   const content = completion.choices[0]?.message?.content;
