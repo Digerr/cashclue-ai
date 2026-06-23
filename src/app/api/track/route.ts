@@ -15,6 +15,7 @@ const VALID_EVENTS = new Set([
 ]);
 
 export async function POST(req: NextRequest) {
+  let user: { id: string; cookie: string } | null = null;
   try {
     const body = await req.json().catch(() => ({}));
     const name = String(body.name ?? '');
@@ -22,13 +23,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: 'Invalid event' }, { status: 400 });
     }
 
-    const res = NextResponse.json({});
-    const user = await resolveAnonUser(req, res);
-    setAnonCookieIfNeeded(req, res, user);
-
+    user = (await resolveAnonUser(req)) as { id: string; cookie: string };
     await trackEvent(user.id, name, body.properties);
-    return NextResponse.json({ ok: true });
+
+    const res = NextResponse.json({ ok: true });
+    setAnonCookieIfNeeded(req, res, user);
+    return res;
   } catch (e: any) {
-    return NextResponse.json({ ok: false, error: e?.message }, { status: 500 });
+    console.error('/api/track error:', e);
+    const res = NextResponse.json({ ok: false, error: e?.message }, { status: 500 });
+    if (user) setAnonCookieIfNeeded(req, res, user);
+    return res;
   }
 }

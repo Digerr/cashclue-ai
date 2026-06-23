@@ -6,7 +6,8 @@ export const ANON_COOKIE_NAME = 'cashclue_uid';
 export const ANON_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 function hashIp(ip: string): string {
-  return crypto.createHash('sha256').update(ip + process.env.CASHCLUE_SALT || 'cashclue-default-salt').digest('hex').slice(0, 32);
+  const salt = process.env.CASHCLUE_SALT || 'cashclue-default-salt';
+  return crypto.createHash('sha256').update(ip + salt).digest('hex').slice(0, 32);
 }
 
 function getClientIp(req: NextRequest): string {
@@ -19,9 +20,10 @@ function getClientIp(req: NextRequest): string {
 
 /**
  * Resolve or create an anonymous user from the request cookie.
- * Sets the cookie on the response if newly created.
+ * Does NOT set cookies on the response — caller must use setAnonCookieIfNeeded()
+ * on the actual response they return.
  */
-export async function resolveAnonUser(req: NextRequest, res?: NextResponse) {
+export async function resolveAnonUser(req: NextRequest) {
   const existingCookie = req.cookies.get(ANON_COOKIE_NAME)?.value;
   const ipHash = hashIp(getClientIp(req));
   const userAgent = req.headers.get('user-agent')?.slice(0, 500) ?? null;
@@ -31,11 +33,13 @@ export async function resolveAnonUser(req: NextRequest, res?: NextResponse) {
       where: { cookie: existingCookie },
     });
     if (user) {
-      // Update last seen + lang if needed
-      await db.anonymousUser.update({
-        where: { id: user.id },
-        data: { lastSeenAt: new Date(), ipHash, userAgent },
-      });
+      // Update last seen async (fire-and-forget to avoid blocking response)
+      db.anonymousUser
+        .update({
+          where: { id: user.id },
+          data: { lastSeenAt: new Date(), ipHash, userAgent },
+        })
+        .catch(() => {});
       return user;
     }
   }
@@ -51,16 +55,6 @@ export async function resolveAnonUser(req: NextRequest, res?: NextResponse) {
       lang: 'en',
     },
   });
-
-  if (res) {
-    res.cookies.set(ANON_COOKIE_NAME, newCookie, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: ANON_COOKIE_MAX_AGE,
-      path: '/',
-    });
-  }
 
   return user;
 }

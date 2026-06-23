@@ -22,12 +22,14 @@ export async function GET(
 
   // Try to find user (best-effort — for analytics tracking on completion)
   let userId: string | null = null;
+  let userCookie: string | undefined;
   try {
-    const res = NextResponse.json({});
-    const user = await resolveAnonUser(req, res);
-    setAnonCookieIfNeeded(req, res, user);
+    const user = await resolveAnonUser(req);
     userId = user.id;
-  } catch {}
+    userCookie = user.cookie;
+  } catch (e) {
+    console.error('resolveAnonUser failed in /api/status:', e);
+  }
 
   const response: any = {
     jobId: job.id,
@@ -57,7 +59,7 @@ export async function GET(
             success: true,
           },
         })
-        .catch(() => {});
+        .catch((e) => console.error('Failed to persist plan:', e));
       trackEvent(userId, 'generate_success', {
         latencyMs: job.completedAt! - job.startedAt!,
       }).catch(() => {});
@@ -74,9 +76,13 @@ export async function GET(
           where: { id: userId },
           data: { credits: { increment: 1 } },
         })
-        .catch(() => {});
+        .catch((e) => console.error('Failed to refund credit:', e));
     }
   }
 
-  return NextResponse.json(response);
+  const res = NextResponse.json(response);
+  if (userCookie) {
+    setAnonCookieIfNeeded(req, res, { cookie: userCookie });
+  }
+  return res;
 }
