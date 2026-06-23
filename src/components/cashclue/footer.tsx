@@ -53,6 +53,24 @@ export function Footer() {
             {t.footer_made}
           </p>
         </div>
+
+        <div className="mt-6 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs text-muted-foreground">
+            Crafted by{' '}
+            <a
+              href="https://github.com/Digerr/cashclue-ai"
+              target="_blank"
+              rel="noreferrer"
+              className="font-bold text-[var(--emerald-glow)] hover:underline"
+            >
+              SKUFI4
+            </a>
+            {' '}🛠
+          </p>
+          <p className="text-[10px] text-muted-foreground/60 uppercase tracking-widest">
+            Built with Next.js · Prisma · Z.ai
+          </p>
+        </div>
       </div>
     </footer>
   );

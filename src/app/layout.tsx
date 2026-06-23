@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     "hustle idea",
     "AI strategist",
   ],
-  authors: [{ name: "CashClue AI" }],
-  creator: "CashClue AI",
-  publisher: "CashClue AI",
+  authors: [{ name: "SKUFI4", url: "https://github.com/Digerr/cashclue-ai" }],
+  creator: "SKUFI4",
+  publisher: "SKUFI4",
   robots: {
     index: true,
     follow: true,
@@ -119,6 +119,8 @@ const jsonLd = {
   description,
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
+  author: { "@type": "Person", name: "SKUFI4", url: "https://github.com/Digerr/cashclue-ai" },
+  creator: { "@type": "Person", name: "SKUFI4" },
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
