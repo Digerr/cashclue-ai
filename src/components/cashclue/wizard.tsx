@@ -251,10 +251,16 @@ interface JobStatus {
   latencyMs?: number;
 }
 
-export function Wizard() {
+export function Wizard({ initialTheme = 'sideHustle' }: { initialTheme?: ThemeId }) {
   const { t, lang } = useLang();
   const { toast } = useToast();
-  const [theme, setTheme] = useState<ThemeId>('sideHustle');
+  const [theme, setTheme] = useState<ThemeId>(initialTheme);
+
+  // Sync when parent ThemeShowcase changes selection
+  useEffect(() => {
+    setTheme(initialTheme);
+  }, [initialTheme]);
+
   const [form, setForm] = useState({
     skills: '',
     hoursPerWeek: '10',
@@ -526,33 +532,31 @@ export function Wizard() {
               </CardHeader>
 
               <CardContent className="space-y-6 relative">
-                {/* Theme picker */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">{t.theme_label}</Label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                    {themeOptions.map((opt) => {
-                      const Icon = THEME_ICONS[opt.id];
-                      const active = theme === opt.id;
-                      return (
-                        <button
-                          key={opt.id}
-                          type="button"
-                          onClick={() => handleThemeChange(opt.id)}
-                          className={`group text-left rounded-lg border p-3 transition-all ${
-                            active
-                              ? 'border-[var(--emerald-glow)] bg-[var(--emerald-glow)]/10 ring-1 ring-[var(--emerald-glow)]/40'
-                              : 'border-border bg-background/40 hover:border-[var(--emerald-glow)]/40'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2 mb-1">
-                            <Icon className={`h-4 w-4 ${active ? 'text-[var(--emerald-glow)]' : 'text-muted-foreground'}`} />
-                            <span className="text-sm font-semibold">{opt.label}</span>
-                          </div>
-                          <div className="text-[11px] text-muted-foreground leading-snug">{opt.desc}</div>
-                        </button>
-                      );
-                    })}
+                {/* Compact theme indicator — full picker is above in ThemeShowcase */}
+                <div className="flex items-center justify-between gap-2 flex-wrap rounded-lg border border-border bg-background/40 p-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                      {t.theme_label}:
+                    </span>
+                    <Badge variant="outline" className="font-semibold text-[var(--emerald-glow)] border-[var(--emerald-glow)]/40">
+                      {(() => {
+                        const opt = themeOptions.find((o) => o.id === theme);
+                        const Icon = THEME_ICONS[theme];
+                        return (
+                          <>
+                            {Icon && <Icon className="h-3 w-3 mr-1" />}
+                            {opt?.label}
+                          </>
+                        );
+                      })()}
+                    </Badge>
                   </div>
+                  <a
+                    href="#themes"
+                    className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+                  >
+                    Change →
+                  </a>
                 </div>
 
                 <div className="space-y-2">
