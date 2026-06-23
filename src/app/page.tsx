@@ -8,6 +8,7 @@ import { Wizard } from '@/components/cashclue/wizard';
 import { HowItWorks } from '@/components/cashclue/how-it-works';
 import { Examples } from '@/components/cashclue/examples';
 import { Pricing } from '@/components/cashclue/pricing';
+import { Faq } from '@/components/cashclue/faq';
 import { Footer } from '@/components/cashclue/footer';
 import type { ThemeId } from '@/lib/ai';
 
@@ -24,6 +25,7 @@ export default function Home() {
         <HowItWorks />
         <Examples />
         <Pricing />
+        <Faq />
       </main>
       <Footer />
     </div>

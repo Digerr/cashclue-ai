@@ -159,6 +159,20 @@ export interface Dict {
   footer_made: string;
   footer_product: string;
   footer_company: string;
+
+  // FAQ
+  faq_title: string;
+  faq_sub: string;
+  faq_q1: string; faq_a1: string;
+  faq_q2: string; faq_a2: string;
+  faq_q3: string; faq_a3: string;
+  faq_q4: string; faq_a4: string;
+  faq_q5: string; faq_a5: string;
+  faq_q6: string; faq_a6: string;
+  faq_q7: string; faq_a7: string;
+  faq_q8: string; faq_a8: string;
+  faq_q9: string; faq_a9: string;
+  faq_q10: string; faq_a10: string;
 }
 
 export const DICT: Record<Lang, Dict> = {
@@ -302,6 +316,29 @@ export const DICT: Record<Lang, Dict> = {
     footer_made: 'Made with grit, caffeine, and an unhealthy obsession with side hustles.',
     footer_product: 'Product',
     footer_company: 'Company',
+
+    faq_title: 'Frequently asked questions',
+    faq_sub: 'Everything you wanted to know about CashClue AI. No marketing fluff, just straight answers.',
+    faq_q1: 'What is CashClue AI?',
+    faq_a1: 'An AI strategist that takes your skills, available time, budget, and goals — then generates 3 personalized money-making plans with roadmaps, income projections, tools, and risk analysis. Five modes: side hustle, startup idea, content creator, career pivot, passive income.',
+    faq_q2: 'How many free plans do I get?',
+    faq_a2: 'Three (3) free plan generations per browser. No credit card, no signup. After that, upgrade to Pro ($19/mo) for unlimited generations, or Empire ($49/mo) for AI coach + mastermind.',
+    faq_q3: 'Do I need to sign up?',
+    faq_a3: 'No. We set an anonymous cookie on your browser to track your free credits. If you clear cookies, you start fresh. Premium tiers will require email login (coming soon).',
+    faq_q4: 'What languages are supported?',
+    faq_a4: 'Five: English, Русский, Español, Deutsch, Français. Switch from the globe icon in the header. The AI generates plans in whichever language you selected.',
+    faq_q5: 'How accurate are the income projections?',
+    faq_a5: 'They are AI-estimated ranges based on typical outcomes for the business model in 2026 market conditions, calibrated to your stated hours and budget. Treat them as "what is possible if you execute well" — not as guarantees. Most users who follow the roadmap see the lower end of the range within 3-6 months.',
+    faq_q6: 'Can I use the generated plans commercially?',
+    faq_a6: 'Yes. The plans are yours. Start the business, build the product, launch the channel. You own 100% of what you build. CashClue AI is just a strategist — we do not take equity, commission, or fees.',
+    faq_q7: 'What if the AI gives me a bad plan?',
+    faq_a7: 'It happens — AI is not perfect. Use the "Generate another plan" button (costs another credit) for a fresh take, or switch theme/mode. Also, the risks section is intentionally honest so you can stress-test ideas before committing. Premium tiers will include AI Coach chat for iterative refinement.',
+    faq_q8: 'How is my data stored?',
+    faq_a8: 'Your plan inputs and outputs are stored in our database (Postgres on Neon), linked to an anonymous cookie ID. We hash your IP for abuse detection. We do NOT sell your data. You can request deletion at any time by emailing privacy@cashclue.ai (coming soon).',
+    faq_q9: 'Can I get a refund on Pro/Empire?',
+    faq_a9: 'Yes — 14-day money-back guarantee, no questions asked. Cancel anytime from your account settings; you keep access until the end of the billing period.',
+    faq_q10: 'Is there an API or affiliate program?',
+    faq_a10: 'Both are on the roadmap for Q3 2026. The API will let developers embed CashClue AI into their own apps. The affiliate program will pay 30% recurring commission on Pro/Empire referrals. Join the Discord to get early access.',
   },
 
   ru: {
@@ -444,6 +481,29 @@ export const DICT: Record<Lang, Dict> = {
     footer_made: 'Сделано со злобой, кофеином и нездоровой одержимостью side-hustle-ами.',
     footer_product: 'Продукт',
     footer_company: 'Компания',
+
+    faq_title: 'Частые вопросы',
+    faq_sub: 'Всё что хотел узнать о CashClue AI. Без маркетинговой воды — только прямые ответы.',
+    faq_q1: 'Что такое CashClue AI?',
+    faq_a1: 'AI-стратег, который берёт твои навыки, время, бюджет и цели — и генерирует 3 персональных плана заработка с дорожными картами, прогнозами доходов, инструментами и анализом рисков. Пять режимов: побочный заработок, стартап-идея, контент-креатор, смена карьеры, пассивный доход.',
+    faq_q2: 'Сколько бесплатных планов я получаю?',
+    faq_a2: 'Три (3) генерации на браузер. Без карты, без регистрации. Дальше — Pro ($19/мес) для безлимита, или Empire ($49/мес) для AI-коуча и mastermind-группы.',
+    faq_q3: 'Нужна ли регистрация?',
+    faq_a3: 'Нет. Мы ставим анонимную куку в твоём браузере для отслеживания бесплатных попыток. Очистишь куки — начнёшь заново. Платные тарифы потребуют email-логина (скоро).',
+    faq_q4: 'Какие языки поддерживаются?',
+    faq_a4: 'Пять: English, Русский, Español, Deutsch, Français. Переключай через иконку глобуса в шапке. AI генерирует план на выбранном языке.',
+    faq_q5: 'Насколько точны прогнозы доходов?',
+    faq_a5: 'Это AI-оценки диапазонов на основе типичных исходов для модели бизнеса в условиях рынка 2026, калиброванные под твои часы и бюджет. Воспринимай их как "что возможно при хорошем исполнении", а не как гарантию. Большинство пользователей, выполняющих план, видят нижнюю границу диапазона за 3-6 месяцев.',
+    faq_q6: 'Можно ли использовать планы коммерчески?',
+    faq_a6: 'Да. Планы — твои. Запускай бизнес, строй продукт, открывай канал. Ты владеешь 100% того, что построил. CashClue AI — просто стратег, мы не берём долю, комиссию или сборы.',
+    faq_q7: 'Что если AI выдаст плохой план?',
+    faq_a7: 'Случается — AI не идеален. Жми "Сгенерировать ещё план" (тратит ещё одну попытку) для свежей идеи, или смени тему/режим. Также раздел рисков намеренно честный, чтобы ты мог проверить идеи до вложений. Платные тарифы включают AI-коуча для итеративной доработки.',
+    faq_q8: 'Как хранятся мои данные?',
+    faq_a8: 'Ввод и вывод планов хранится в нашей БД (Postgres на Neon), привязанной к анонимной куке. IP хэшируется для защиты от абьюза. Мы НЕ продаём твои данные. Удаление по запросу на privacy@cashclue.ai (скоро).',
+    faq_q9: 'Можно вернуть деньги за Pro/Empire?',
+    faq_a9: 'Да — гарантия возврата 14 дней, без вопросов. Отписка в любой момент из настроек аккаунта; доступ сохраняется до конца оплаченного периода.',
+    faq_q10: 'Есть ли API или партнёрская программа?',
+    faq_a10: 'Обои в roadmap на Q3 2026. API позволит разработчикам встраивать CashClue AI в свои приложения. Партнёрка будет платить 30% регулярной комиссии за рефералов Pro/Empire. Зайди в Discord для раннего доступа.',
   },
 
   es: {
@@ -586,6 +646,29 @@ export const DICT: Record<Lang, Dict> = {
     footer_made: 'Hecho con agallas, cafeína y una obsesión poco sana con los side hustles.',
     footer_product: 'Producto',
     footer_company: 'Empresa',
+
+    faq_title: 'Preguntas frecuentes',
+    faq_sub: 'Todo lo que querías saber sobre CashClue AI. Sin humo de marketing, solo respuestas directas.',
+    faq_q1: '¿Qué es CashClue AI?',
+    faq_a1: 'Un estratega de IA que toma tus habilidades, tiempo, presupuesto y objetivos — y genera 3 planes personalizados para ganar dinero con hojas de ruta, proyecciones de ingresos, herramientas y análisis de riesgos. Cinco modos: side hustle, startup, creador de contenido, cambio de carrera, ingresos pasivos.',
+    faq_q2: '¿Cuántos planes gratis tengo?',
+    faq_a2: 'Tres (3) generaciones gratis por navegador. Sin tarjeta, sin registro. Después, mejora a Pro ($19/mes) para generaciones ilimitadas, o Empire ($49/mes) para AI Coach + mastermind.',
+    faq_q3: '¿Necesito registrarme?',
+    faq_a3: 'No. Ponemos una cookie anónima en tu navegador para rastrear tus créditos gratis. Si borras cookies, empiezas de cero. Los niveles premium requerirán login con email (próximamente).',
+    faq_q4: '¿Qué idiomas soporta?',
+    faq_a4: 'Cinco: English, Русский, Español, Deutsch, Français. Cambia desde el icono del globo en el header. La IA genera planes en el idioma que selecciones.',
+    faq_q5: '¿Qué tan precisas son las proyecciones de ingresos?',
+    faq_a5: 'Son rangos estimados por IA basados en resultados típicos del modelo de negocio en condiciones de mercado 2026, calibrados a tus horas y presupuesto. Trátalos como "lo posible si ejecutas bien" — no como garantías. La mayoría de los usuarios que siguen la hoja de ruta ven el extremo inferior del rango en 3-6 meses.',
+    faq_q6: '¿Puedo usar los planes comercialmente?',
+    faq_a6: 'Sí. Los planes son tuyos. Inicia el negocio, construye el producto, lanza el canal. Eres dueño al 100% de lo que construyes. CashClue AI es solo un estratega — no tomamos equity, comisión ni tarifas.',
+    faq_q7: '¿Y si la IA me da un mal plan?',
+    faq_a7: 'Pasa — la IA no es perfecta. Usa el botón "Generar otro plan" (cuesta otro crédito) para una idea fresca, o cambia de tema. La sección de riesgos es intencionalmente honesta para que puedas estresar ideas antes de comprometerte. Los niveles premium incluirán chat con AI Coach para refinamiento iterativo.',
+    faq_q8: '¿Cómo se almacenan mis datos?',
+    faq_a8: 'Tus inputs y outputs se guardan en nuestra base de datos (Postgres en Neon), vinculados a una cookie anónima. Hasheamos tu IP para detección de abuso. NO vendemos tus datos. Puedes solicitar eliminación escribiendo a privacy@cashclue.ai (próximamente).',
+    faq_q9: '¿Puedo reembolsar Pro/Empire?',
+    faq_a9: 'Sí — garantía de devolución de 14 días, sin preguntas. Cancela cuando quieras desde la configuración de la cuenta; mantienes acceso hasta el final del período facturado.',
+    faq_q10: '¿Hay API o programa de afiliados?',
+    faq_a10: 'Ambos en la roadmap para Q3 2026. La API permitirá a desarrolladores integrar CashClue AI en sus apps. El programa de afiliados pagará 30% de comisión recurrente por referidos Pro/Empire. Únete al Discord para acceso temprano.',
   },
 
   de: {
@@ -728,6 +811,29 @@ export const DICT: Record<Lang, Dict> = {
     footer_made: 'Mit Biss, Koffein und einer ungesunden Side-Hustle-Obsession gemacht.',
     footer_product: 'Produkt',
     footer_company: 'Firma',
+
+    faq_title: 'Häufige Fragen',
+    faq_sub: 'Alles was du über CashClue AI wissen wolltest. Kein Marketing-Bullshit, nur klare Antworten.',
+    faq_q1: 'Was ist CashClue AI?',
+    faq_a1: 'Ein KI-Stratege, der deine Skills, Zeit, Budget und Ziele nimmt — und 3 personalisierte Geld-Verdienstpläne mit Roadmaps, Einkommensprognosen, Tools und Risikoanalyse generiert. Fünf Modi: Side Hustle, Startup, Content Creator, Karriere-Pivot, Passives Einkommen.',
+    faq_q2: 'Wie viele kostenlose Pläne bekomme ich?',
+    faq_a2: 'Drei (3) kostenlose Generierungen pro Browser. Keine Karte, keine Anmeldung. Danach: Pro ($19/Mon) für unbegrenzte Generierungen, oder Empire ($49/Mon) für KI-Coach + Mastermind.',
+    faq_q3: 'Muss ich mich registrieren?',
+    faq_a3: 'Nein. Wir setzen ein anonymes Cookie in deinem Browser, um deine Gratis-Credits zu tracken. Cookies löschen = neu starten. Premium-Tiere erfordern Email-Login (bald).',
+    faq_q4: 'Welche Sprachen werden unterstützt?',
+    faq_a4: 'Fünf: English, Русский, Español, Deutsch, Français. Umschalten über das Globus-Icon im Header. Die KI generiert Pläne in der gewählten Sprache.',
+    faq_q5: 'Wie genau sind die Einkommensprognosen?',
+    faq_a5: 'Es sind KI-geschätzte Bereiche basierend auf typischen Ergebnissen für das Geschäftsmodell bei 2026-Marktbedingungen, kalibriert auf deine Stunden und Budget. Behandle sie als "was möglich ist, wenn du gut ausführst" — nicht als Garantien. Die meisten Nutzer, die der Roadmap folgen, sehen das untere Ende des Bereichs in 3-6 Monaten.',
+    faq_q6: 'Kann ich die Pläne kommerziell nutzen?',
+    faq_a6: 'Ja. Die Pläne gehören dir. Starte das Business, baue das Produkt, launch den Channel. Du besitzt 100% von dem, was du baust. CashClue AI ist nur ein Stratege — wir nehmen kein Equity, keine Provision, keine Gebühren.',
+    faq_q7: 'Was, wenn die KI einen schlechten Plan liefert?',
+    faq_a7: 'Passiert — KI ist nicht perfekt. Nutze den "Weiteren Plan generieren"-Button (kostet einen Credit) für eine frische Idee, oder wechsle Thema/Modus. Die Risiko-Sektion ist absichtlich ehrlich, damit du Ideen stress-testen kannst. Premium-Tiere beinhalten KI-Coach-Chat für iterative Verbesserung.',
+    faq_q8: 'Wie werden meine Daten gespeichert?',
+    faq_a8: 'Deine Inputs und Outputs werden in unserer DB gespeichert (Postgres auf Neon), verknüpft mit einem anonymen Cookie. Deine IP wird gehasht für Missbrauchserkennung. Wir verkaufen deine Daten NICHT. Löschung auf Anfrage unter privacy@cashclue.ai (bald).',
+    faq_q9: 'Kann ich Pro/Empire erstatten lassen?',
+    faq_a9: 'Ja — 14-Tage-Geld-zurück-Garantie, ohne Fragen. Jederzeit kündbar aus den Account-Settings; Zugriff bleibt bis zum Ende des Abrechnungszeitraums.',
+    faq_q10: 'Gibt es eine API oder ein Affiliate-Programm?',
+    faq_a10: 'Beides auf der Roadmap für Q3 2026. Die API erlaubt Entwicklern, CashClue AI in ihre Apps einzubetten. Das Affiliate-Programm zahlt 30% wiederkehrende Provision für Pro/Empire-Empfehlungen. Tritt dem Discord bei für Early Access.',
   },
 
   fr: {
@@ -870,6 +976,29 @@ export const DICT: Record<Lang, Dict> = {
     footer_made: 'Fait avec du guts, de la caféine et une obsession malsaine des side hustles.',
     footer_product: 'Produit',
     footer_company: 'Société',
+
+    faq_title: 'Questions fréquentes',
+    faq_sub: 'Tout ce que tu voulais savoir sur CashClue AI. Sans blabla marketing, juste des réponses directes.',
+    faq_q1: 'Qu’est-ce que CashClue AI ?',
+    faq_a1: 'Un stratège IA qui prend tes compétences, ton temps, ton budget et tes objectifs — et génère 3 plans personnalisés pour gagner de l’argent avec feuilles de route, projections de revenus, outils et analyse des risques. Cinq modes : side hustle, startup, créateur de contenu, reconversion, revenus passifs.',
+    faq_q2: 'Combien de plans gratuits j’ai droit ?',
+    faq_a2: 'Trois (3) générations gratuites par navigateur. Sans carte, sans inscription. Ensuite : Pro ($19/mois) pour générations illimitées, ou Empire ($49/mois) pour Coach IA + mastermind.',
+    faq_q3: 'Dois-je m’inscrire ?',
+    faq_a3: 'Non. On pose un cookie anonyme dans ton navigateur pour tracker tes crédits gratuits. Cookies effacés = nouveau départ. Les tiers premium nécessiteront un login email (bientôt).',
+    faq_q4: 'Quelles langues sont supportées ?',
+    faq_a4: 'Cinq : English, Русский, Español, Deutsch, Français. Bascule via l’icône globe dans le header. L’IA génère les plans dans la langue sélectionnée.',
+    faq_q5: 'Les projections de revenus sont-elles précises ?',
+    faq_a5: 'Ce sont des fourchettes estimées par IA basées sur les résultats typiques du modèle business en conditions marché 2026, calibrées à tes heures et budget. Traite-les comme "ce qui est possible si tu exécutes bien" — pas comme garanties. La plupart des utilisateurs qui suivent la feuille de route voient le bas de la fourchette en 3-6 mois.',
+    faq_q6: 'Puis-je utiliser les plans commercialement ?',
+    faq_a6: 'Oui. Les plans sont à toi. Lance le business, construis le produit, ouvre le canal. Tu possèdes 100% de ce que tu construis. CashClue AI est juste un stratège — on ne prend pas d’equity, commission ni frais.',
+    faq_q7: 'Et si l’IA me donne un mauvais plan ?',
+    faq_a7: 'Ça arrive — l’IA n’est pas parfaite. Utilise le bouton "Générer un autre plan" (coûte un crédit) pour une idée fraîche, ou change de thème. La section risques est volontairement honnête pour que tu puisses stress-tester les idées. Les tiers premium incluront un chat Coach IA pour raffinement itératif.',
+    faq_q8: 'Comment mes données sont-elles stockées ?',
+    faq_a8: 'Tes inputs et outputs sont stockés dans notre base (Postgres sur Neon), liés à un cookie anonyme. Ton IP est hashée pour détection d’abus. On NE vend PAS tes données. Suppression sur demande à privacy@cashclue.ai (bientôt).',
+    faq_q9: 'Puis-je me faire rembourser Pro/Empire ?',
+    faq_a9: 'Oui — garantie satisfait ou remboursé 14 jours, sans questions. Annule à tout moment depuis les paramètres du compte ; accès conservé jusqu’à la fin de la période facturée.',
+    faq_q10: 'Y a-t-il une API ou un programme d’affiliation ?',
+    faq_a10: 'Les deux sur la roadmap pour Q3 2026. L’API permettra aux développeurs d’intégrer CashClue AI dans leurs apps. Le programme d’affiliation paiera 30% de commission récurrente sur les références Pro/Empire. Rejoins le Discord pour un accès anticipé.',
   },
 };
 
