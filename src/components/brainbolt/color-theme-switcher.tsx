@@ -7,10 +7,15 @@ import { THEMES, useColorTheme } from './color-theme-context';
 export function ColorThemeSwitcher() {
   const { theme, setTheme, mode, toggleMode } = useColorTheme();
   const [open, setOpen] = useState(false);
+  const [dropdownPos, setDropdownPos] = useState<{ top: number } | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    if (btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setDropdownPos({ top: rect.bottom + 4 });
+    }
     const handler = (e: MouseEvent) => {
       if (btnRef.current && !btnRef.current.contains(e.target as Node)) setOpen(false);
     };
@@ -49,12 +54,12 @@ export function ColorThemeSwitcher() {
       </div>
 
       {/* Dropdown — fixed positioning, opens left from button */}
-      {open && btnRef.current && (
+      {open && dropdownPos && (
         <div
           className="fixed z-[200] w-48 rounded-xl border border-border bg-popover shadow-lg-card overflow-hidden max-h-[70vh] overflow-y-auto animate-scale-in"
           style={{
             right: '8px',
-            top: btnRef.current.getBoundingClientRect().bottom + 4 + 'px',
+            top: dropdownPos.top + 'px',
           }}
         >
           <div className="px-3 py-2 text-[10px] uppercase tracking-wider text-muted-foreground border-b border-border">
