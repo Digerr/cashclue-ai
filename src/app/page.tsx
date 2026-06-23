@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Header } from '@/components/cashclue/header';
 import { Hero } from '@/components/cashclue/hero';
+import { TrustBadges } from '@/components/cashclue/trust-badges';
 import { ThemeShowcase } from '@/components/cashclue/theme-showcase';
 import { Wizard } from '@/components/cashclue/wizard';
 import { HowItWorks } from '@/components/cashclue/how-it-works';
@@ -20,6 +21,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <TrustBadges />
         <ThemeShowcase selected={theme} onSelect={setTheme} />
         <Wizard initialTheme={theme} />
         <HowItWorks />
