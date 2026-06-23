@@ -25,26 +25,31 @@ const Ctx = createContext<ThemeCtx>({
   setTheme: () => {},
 });
 
-function applyTheme(t: ThemeId) {
-  if (typeof document === 'undefined') return;
-  document.documentElement.setAttribute('data-theme', t);
+/**
+ * Read initial theme from localStorage on client-side first render.
+ * The inline script in layout.tsx already applied data-theme before React hydrates,
+ * so this is just to sync React state with the DOM.
+ */
+function getInitialTheme(): ThemeId {
+  if (typeof window === 'undefined') return DEFAULT_THEME;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY) as ThemeId | null;
+    return stored && THEMES.some((x) => x.id === stored) ? stored : DEFAULT_THEME;
+  } catch {
+    return DEFAULT_THEME;
+  }
 }
 
 export function ColorThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeId>(() => {
-    if (typeof window === 'undefined') return DEFAULT_THEME;
-    const stored = window.localStorage.getItem(STORAGE_KEY) as ThemeId | null;
-    if (stored && THEMES.some((t) => t.id === stored)) {
-      applyTheme(stored);
-      return stored;
-    }
-    applyTheme(DEFAULT_THEME);
-    return DEFAULT_THEME;
-  });
+  // useState lazy initializer — runs ONCE on client first render, never on server
+  // (server render uses DEFAULT_THEME, which matches the inline-script default)
+  const [theme, setThemeState] = useState<ThemeId>(getInitialTheme);
 
   const setTheme = useCallback((t: ThemeId) => {
     setThemeState(t);
-    applyTheme(t);
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(STORAGE_KEY, t);
     }
@@ -56,3 +61,4 @@ export function ColorThemeProvider({ children }: { children: React.ReactNode }) 
 export function useColorTheme(): ThemeCtx {
   return useContext(Ctx);
 }
+
