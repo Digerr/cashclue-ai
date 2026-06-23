@@ -44,7 +44,7 @@ export default function ProfilePage() {
     return <div className="container mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">Loading...</div>;
   }
 
-  const stats = {
+  const achStats = {
     totalQuizzes: profile.totalQuizzes,
     bestStreak: profile.bestStreak,
     perfectScores: 0,
