@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Play, Clock, Flame, Trophy, Zap, Target, Check, X, Home } from 'lucide-react';
+import { Clock, Flame, Check, X, Home } from 'lucide-react';
 import { useFeedback } from '@/hooks/use-feedback';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -30,7 +30,9 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState<PlayerAnswer[]>([]);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const [correctIdx, setCorrectIdx] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showNext, setShowNext] = useState(false);
   const [timeLeft, setTimeLeft] = useState(15);
   const [timeAttackTimeLeft, setTimeAttackTimeLeft] = useState(60);
   const [streak, setStreak] = useState(0);
@@ -53,6 +55,7 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
         id: `${seed.slug}-q${i}`,
         text: getLocalized(q.text, lang),
         options: q.options.map((o) => getLocalized(o, lang)),
+        correctIndex: q.correctIndex, // ← NOW INCLUDED for client-side feedback
         timeLimit: q.timeLimit || 15,
         order: i,
       })),
@@ -71,17 +74,36 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
     showFeedbackRef.current = true;
     const timeMs = Date.now() - startTimeRef.current;
     setSelectedIdx(idx);
+    setCorrectIdx(question.correctIndex);
     setShowFeedback(true);
+
+    // Haptic + sound based on correctness
+    const isCorrect = idx === question.correctIndex;
+    if (isCorrect) {
+      trigger('success');
+      play('correct');
+      setStreak(s => s + 1);
+    } else {
+      trigger('error');
+      play('wrong');
+      setStreak(0);
+    }
+
     const answer: PlayerAnswer = { questionId: question.id, selectedIndex: idx, timeMs: timedOut ? question.timeLimit * 1000 : timeMs };
     answersRef.current = [...answersRef.current, answer];
     setAnswers(answersRef.current);
-  }, [question]);
+
+    // Show "Next" button after 1.2s delay (let user see the feedback)
+    setTimeout(() => setShowNext(true), 1200);
+  }, [question, trigger, play]);
 
   useEffect(() => {
     if (!quiz || isTimeAttack) return;
     setTimeLeft(question.timeLimit);
     setSelectedIdx(null);
+    setCorrectIdx(null);
     setShowFeedback(false);
+    setShowNext(false);
     showFeedbackRef.current = false;
     startTimeRef.current = Date.now();
     setSlideAnim('in');
@@ -135,7 +157,7 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (showFeedback) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); handleNext(); } return; }
+      if (showFeedback) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (showNext) handleNext(); } return; }
       if (['1', '2', '3', '4'].includes(e.key) && question) {
         const idx = parseInt(e.key, 10) - 1;
         if (idx < question.options.length) handleAnswer(idx);
@@ -143,10 +165,10 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [showFeedback, question, handleAnswer, handleNext]);
+  }, [showFeedback, showNext, question, handleAnswer, handleNext]);
 
   if (loading || !quiz) {
-    return <div className="container mx-auto max-w-3xl px-4 py-20 text-center"><div className="animate-pulse text-muted-foreground">Loading quiz...</div></div>;
+    return <div className="mx-auto max-w-xl px-4 py-20 text-center"><div className="animate-pulse text-muted-foreground">Loading...</div></div>;
   }
 
   const progressPct = ((currentIdx + (showFeedback ? 1 : 0)) / quiz.questions.length) * 100;
@@ -154,98 +176,124 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   const timeColor = timeLeft <= 3 ? '#ef4444' : timeLeft <= 7 ? 'var(--gold)' : 'var(--emerald-glow)';
 
   return (
-    <section className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-6">
-      <div className="flex items-center justify-between gap-3 mb-4">
-        <button onClick={() => router.push('/categories')} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
-          <Home className="h-4 w-4" /> Exit
+    <section className="mx-auto max-w-xl px-4 py-3 sm:py-4 flex flex-col" style={{ minHeight: 'calc(100vh - 56px)' }}>
+      {/* Top bar — compact */}
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <button onClick={() => router.push('/categories')} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground press">
+          <Home className="h-3.5 w-3.5" /> Exit
         </button>
-        <Badge variant="outline" className={`text-[10px] uppercase tracking-wide ${
-          mode === 'time-attack' ? 'text-[var(--gold)] border-[var(--gold)]/40' :
-          mode === 'survival' ? 'text-red-400 border-red-400/40' :
-          'text-[var(--emerald-glow)] border-[var(--emerald-glow)]/40'
-        }`}>
-          {mode === 'time-attack' ? '⚡ Time Attack' : mode === 'survival' ? '💀 Survival' : '🎯 Classic'}
-        </Badge>
-      </div>
-
-      <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-2xl">{quiz.icon}</span>
-          <div>
-            <div className="font-bold text-sm">{quiz.title}</div>
-            {!isTimeAttack && <div className="text-[10px] text-muted-foreground">{t.player_question} {currentIdx + 1} {t.player_of} {quiz.questions.length}</div>}
-            {isTimeAttack && <div className="text-[10px] text-muted-foreground">{answers.length} answered</div>}
-          </div>
+          {streak >= 2 && <Badge className="text-[9px] bg-orange-500/20 text-orange-400 border-orange-500/30"><Flame className="h-2.5 w-2.5 mr-0.5" />{streak}</Badge>}
+          <Badge variant="outline" className={`text-[9px] uppercase ${
+            mode === 'time-attack' ? 'text-gold border-gold/30' :
+            mode === 'survival' ? 'text-red-400 border-red-400/30' :
+            'text-primary border-primary/30'
+          }`}>
+            {mode === 'time-attack' ? '⚡ Attack' : mode === 'survival' ? '💀 Survival' : '🎯'}
+          </Badge>
         </div>
-        {streak >= 3 && <Badge className="text-[10px] bg-orange-400 text-black"><Flame className="h-2.5 w-2.5 mr-1" /> {streak} streak</Badge>}
       </div>
 
+      {/* Progress + timer — compact */}
+      <div className="flex items-center gap-3 mb-3">
+        {/* Progress dots */}
+        <div className="flex gap-1 shrink-0">
+          {quiz.questions.map((_: any, i: number) => (
+            <div key={i} className={`h-1.5 rounded-full transition-all ${i < currentIdx ? 'bg-primary w-4' : i === currentIdx ? 'bg-primary w-6' : 'bg-muted w-1.5'}`} />
+          ))}
+        </div>
+        {/* Timer */}
+        {!isTimeAttack && (
+          <div className="flex items-center gap-1.5 ml-auto">
+            <Clock className={`h-3.5 w-3.5 ${timeLeft <= 3 ? 'text-red-400 animate-timer-pulse' : 'text-muted-foreground'}`} />
+            <span className={`text-lg font-bold font-mono tabular-nums ${timeLeft <= 3 ? 'text-red-400 animate-timer-pulse' : timeLeft <= 7 ? 'text-gold' : 'text-foreground'}`}>{timeLeft}</span>
+          </div>
+        )}
+        {isTimeAttack && (
+          <div className="flex items-center gap-1.5 ml-auto">
+            <span className="text-lg font-bold font-mono text-gold">{timeAttackTimeLeft}s</span>
+          </div>
+        )}
+      </div>
+
+      {/* Timer bar */}
       {!isTimeAttack && (
-        <div className="h-1.5 bg-background/60 rounded-full overflow-hidden mb-4">
-          <div className="h-full bg-gradient-to-r from-[var(--emerald-glow)] to-[var(--gold)] transition-all duration-500" style={{ width: `${progressPct}%` }} />
+        <div className="h-0.5 bg-muted rounded-full overflow-hidden mb-4">
+          <div className="h-full transition-all duration-1000 ease-linear" style={{ width: `${timePct}%`, background: timeColor }} />
         </div>
       )}
 
-      {isTimeAttack && (
-        <div className="mb-4 p-3 rounded-lg border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-center">
-          <div className="text-xs text-[var(--gold)] uppercase tracking-wide mb-1">Time remaining</div>
-          <div className="text-3xl font-bold font-mono tabular-nums text-[var(--gold)]">{timeAttackTimeLeft}s</div>
-        </div>
-      )}
+      {/* Question card — flex-1 to fill space */}
+      <Card className={`border-border bg-card shadow-card flex-1 flex flex-col transition-all duration-300 ${slideAnim === 'in' ? 'animate-slide-in-right' : 'animate-slide-out-left'}`}>
+        <CardContent className="pt-5 pb-5 flex-1 flex flex-col">
+          {/* Question */}
+          <h2 className="text-lg sm:text-xl font-bold mb-4 leading-snug">{question.text}</h2>
 
-      <Card className={`border-border bg-card shadow-card transition-all duration-300 ${slideAnim === 'in' ? 'animate-slide-in-right' : 'animate-slide-out-left'}`}>
-        <CardContent className="pt-6 pb-6">
-          {!isTimeAttack && (
-            <>
-              <div className="flex items-center justify-between mb-3">
-                <div className="text-xs text-muted-foreground">{t.player_time_left}</div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" style={{ color: timeColor }} />
-                  <span className="text-2xl font-bold font-mono tabular-nums" style={{ color: timeColor }}>{timeLeft}</span>
-                </div>
-              </div>
-              <div className="h-1 bg-background/60 rounded-full overflow-hidden mb-5">
-                <div className="h-full transition-all duration-1000 ease-linear" style={{ width: `${timePct}%`, background: timeColor }} />
-              </div>
-            </>
-          )}
-
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 leading-snug">{question.text}</h2>
-
-          <div className="grid gap-2.5">
+          {/* Options — flex-1 to fill, gap-2 for compactness */}
+          <div className="grid gap-2 flex-1">
             {question.options.map((opt: string, i: number) => {
               const isSelected = selectedIdx === i;
+              const isCorrect = correctIdx === i;
+
+              // Determine styling based on feedback state
+              let stateClass = 'border-border bg-card hover:border-primary/40 hover:bg-accent';
+              if (showFeedback) {
+                if (isCorrect) {
+                  stateClass = 'border-primary bg-primary/10 ring-2 ring-primary/30';
+                } else if (isSelected) {
+                  stateClass = 'border-destructive bg-destructive/10 ring-2 ring-destructive/30';
+                } else {
+                  stateClass = 'border-border opacity-40';
+                }
+              }
+
               return (
                 <button
                   key={i}
-                  onClick={() => { if (!showFeedback) { handleAnswer(i); play('click'); trigger('select'); } }}
+                  onClick={() => { if (!showFeedback) { handleAnswer(i); trigger('select'); } }}
                   disabled={showFeedback}
-                  className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all press ${
-                    showFeedback && isSelected ? 'border-primary bg-primary/10 ring-2 ring-primary/30 scale-[1.02] shadow-glow' :
-                    showFeedback ? 'border-border opacity-40' : 'border-border bg-card hover:border-primary/40 hover:bg-accent'
-                  }`}
+                  className={`flex items-center gap-3 p-3 sm:p-3.5 rounded-xl border text-left transition-all press ${stateClass}`}
                 >
-                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-2 text-xs font-bold transition-all ${
-                    showFeedback && isSelected ? 'border-primary bg-primary text-primary-foreground' : 'border-border text-muted-foreground'
+                  <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold transition-all ${
+                    showFeedback && isCorrect ? 'bg-primary text-primary-foreground' :
+                    showFeedback && isSelected ? 'bg-destructive text-white' :
+                    'border border-border text-muted-foreground'
                   }`}>{String.fromCharCode(65 + i)}</div>
                   <span className="flex-1 text-sm font-medium">{opt}</span>
-                  {showFeedback && isSelected && <Check className="h-5 w-5 text-primary shrink-0" />}
+                  {/* Icons */}
+                  {showFeedback && isCorrect && <Check className="h-4 w-4 text-primary shrink-0" />}
+                  {showFeedback && isSelected && !isCorrect && <X className="h-4 w-4 text-destructive shrink-0" />}
                 </button>
               );
             })}
           </div>
 
-          {!showFeedback && (
-            <div className="mt-5 text-[10px] text-muted-foreground text-center">
-              Press <kbd className="px-1.5 py-0.5 rounded border border-border bg-card font-mono text-[9px]">1</kbd>-<kbd className="px-1.5 py-0.5 rounded border border-border bg-card font-mono text-[9px]">4</kbd> or tap
+          {/* Feedback message */}
+          {showFeedback && (
+            <div className="mt-3 text-center animate-fade-in">
+              {selectedIdx === correctIdx ? (
+                <span className="text-sm font-bold text-primary">✓ Correct!</span>
+              ) : selectedIdx === -1 ? (
+                <span className="text-sm font-bold text-destructive">⏰ Time's up!</span>
+              ) : (
+                <span className="text-sm font-bold text-destructive">✗ Wrong! The correct answer is highlighted.</span>
+              )}
             </div>
           )}
 
-          {showFeedback && (
-            <div className="mt-6 flex justify-end">
-              <Button onClick={handleNext} disabled={submitting} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-xl px-8 h-12">
-                {submitting ? 'Loading...' : isLast || isTimeAttack ? t.player_finish : t.player_next}
+          {/* Next button — appears after delay */}
+          {showNext && (
+            <div className="mt-3 flex justify-end animate-slide-in-up">
+              <Button onClick={handleNext} disabled={submitting} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-xl px-6 h-11 press">
+                {submitting ? 'Loading...' : isLast || isTimeAttack ? `🎉 ${t.player_finish}` : `${t.player_next} →`}
               </Button>
+            </div>
+          )}
+
+          {/* Keyboard hint */}
+          {!showFeedback && (
+            <div className="mt-2 text-[9px] text-muted-foreground text-center">
+              <kbd className="px-1 py-0.5 rounded border border-border bg-muted font-mono text-[8px]">1</kbd>-<kbd className="px-1 py-0.5 rounded border border-border bg-muted font-mono text-[8px]">4</kbd> or tap
             </div>
           )}
         </CardContent>
