@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLang } from '@/components/brainbolt/language-context';
-import { ACHIEVEMENTS } from '@/lib/auth';
+import { ACHIEVEMENTS, getRank, getNextRank } from '@/lib/auth';
 
 export default function ProfilePage() {
   const { t } = useLang();
@@ -94,12 +94,34 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
-      {/* Level progress */}
+      {/* Level progress + Rank */}
       <Card className="border-border bg-card/70 backdrop-blur mb-6">
         <CardContent className="pt-5 pb-5">
+          {/* Rank badge */}
+          {(() => {
+            const rank = getRank(profile.level);
+            const next = getNextRank(profile.level);
+            return (
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl">{rank.icon}</span>
+                  <div>
+                    <div className="font-bold text-sm" style={{ color: rank.color }}>{rank.name}</div>
+                    <div className="text-[10px] text-muted-foreground">Level {profile.level}</div>
+                  </div>
+                </div>
+                {next && (
+                  <div className="text-right">
+                    <div className="text-[10px] text-muted-foreground">Next: {next.icon} {next.name}</div>
+                    <div className="text-[10px] font-mono text-muted-foreground">at Lv {next.minLevel}</div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
           <div className="flex justify-between text-xs mb-2">
-            <span className="text-muted-foreground">{t.profile_level} {profile.level}</span>
-            <span className="font-semibold">{profile.xpToNext} XP {t.profile_to_next}</span>
+            <span className="text-muted-foreground">{profile.xp.toLocaleString()} XP total</span>
+            <span className="font-semibold">{profile.xpToNext} XP to next level</span>
           </div>
           <div className="h-3 bg-background/60 rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-[var(--emerald-glow)] to-[var(--gold)]" style={{ width: `${profile.levelProgress * 100}%` }} />

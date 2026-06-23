@@ -36,6 +36,10 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   const [timeLeft, setTimeLeft] = useState(15);
   const [timeAttackTimeLeft, setTimeAttackTimeLeft] = useState(60);
   const [streak, setStreak] = useState(0);
+  const [hintsLeft, setHintsLeft] = useState(3);
+  const [hintUsed, setHintUsed] = useState(false);
+  const [eliminatedOptions, setEliminatedOptions] = useState<number[]>([]);
+  const [showHintButton, setShowHintButton] = useState(true);
   const [slideAnim, setSlideAnim] = useState<'in' | 'out'>('in');
   const [submitting, setSubmitting] = useState(false);
   const startTimeRef = useRef<number>(Date.now());
@@ -124,6 +128,19 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   const isLast = quiz && currentIdx === quiz.questions.length - 1;
   const isTimeAttack = mode === 'time-attack';
 
+  // Hint: 50/50 — eliminate 2 wrong options
+  const useHint = useCallback(() => {
+    if (hintsLeft <= 0 || showFeedback || !question) return;
+    trigger('tap');
+    setHintsLeft(h => h - 1);
+    setHintUsed(true);
+    setShowHintButton(false);
+    // Eliminate 2 random wrong options
+    const wrong = [0, 1, 2, 3].filter(i => i !== question.correctIndex);
+    const toEliminate = wrong.sort(() => Math.random() - 0.5).slice(0, 2);
+    setEliminatedOptions(toEliminate);
+  }, [hintsLeft, showFeedback, question, trigger]);
+
   const handleAnswer = useCallback((idx: number, timedOut = false) => {
     if (showFeedbackRef.current || !question) return;
     if (timerRef.current) clearInterval(timerRef.current);
@@ -160,6 +177,9 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
     setCorrectIdx(null);
     setShowFeedback(false);
     setShowNext(false);
+    setHintUsed(false);
+    setEliminatedOptions([]);
+    setShowHintButton(true);
     showFeedbackRef.current = false;
     startTimeRef.current = Date.now();
     setSlideAnim('in');
@@ -294,7 +314,13 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
               const isCorrect = correctIdx === i;
 
               // Determine styling based on feedback state
+              // Check if this option was eliminated by hint
+              const isEliminated = eliminatedOptions.includes(i);
+
               let stateClass = 'border-border bg-card hover:border-primary/40 hover:bg-accent';
+              if (isEliminated && !showFeedback) {
+                stateClass = 'border-border opacity-30 line-through';
+              }
               if (showFeedback) {
                 if (isCorrect) {
                   stateClass = 'border-primary bg-primary/10 ring-2 ring-primary/30';
@@ -308,8 +334,8 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
               return (
                 <button
                   key={i}
-                  onClick={() => { if (!showFeedback) { handleAnswer(i); trigger('select'); } }}
-                  disabled={showFeedback}
+                  onClick={() => { if (!showFeedback && !isEliminated) { handleAnswer(i); trigger('select'); } }}
+                  disabled={showFeedback || isEliminated}
                   className={`flex items-center gap-3 p-3 sm:p-3.5 rounded-xl border text-left transition-all press ${stateClass}`}
                 >
                   <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold transition-all ${
@@ -348,10 +374,24 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
             </div>
           )}
 
-          {/* Keyboard hint */}
+          {/* Hint button + Keyboard hint */}
           {!showFeedback && (
-            <div className="mt-2 text-[9px] text-muted-foreground text-center">
-              <kbd className="px-1 py-0.5 rounded border border-border bg-muted font-mono text-[8px]">1</kbd>-<kbd className="px-1 py-0.5 rounded border border-border bg-muted font-mono text-[8px]">4</kbd> or tap
+            <div className="mt-2 flex items-center justify-between">
+              {showHintButton && hintsLeft > 0 ? (
+                <button
+                  onClick={useHint}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold/10 border border-gold/30 text-gold text-xs font-medium press"
+                >
+                  💡 50/50 Hint ({hintsLeft} left)
+                </button>
+              ) : (
+                <div className="text-[9px] text-muted-foreground">
+                  {hintsLeft === 0 ? '💡 No hints left — <a href="#pricing" class="text-gold">get Pro</a>' : ''}
+                </div>
+              )}
+              <div className="text-[9px] text-muted-foreground">
+                <kbd className="px-1 py-0.5 rounded border border-border bg-muted font-mono text-[8px]">1</kbd>-<kbd className="px-1 py-0.5 rounded border border-border bg-muted font-mono text-[8px]">4</kbd> or tap
+              </div>
             </div>
           )}
         </CardContent>

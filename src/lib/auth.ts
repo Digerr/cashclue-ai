@@ -89,20 +89,34 @@ export const ACHIEVEMENTS = [
   { id: 'streak_20', icon: '🌟', title: 'Unstoppable', desc: '20 correct in a row', check: (s: any) => s.bestStreak >= 20 },
   { id: 'perfect', icon: '💯', title: 'Perfectionist', desc: 'Get a perfect score', check: (s: any) => s.perfectScores >= 1 },
   { id: 'perfect_5', icon: '✨', title: 'Flawless', desc: '5 perfect scores', check: (s: any) => s.perfectScores >= 5 },
+  { id: 'perfect_10', icon: '🏆', title: 'Untouchable', desc: '10 perfect scores', check: (s: any) => s.perfectScores >= 10 },
   { id: 'daily_3', icon: '📅', title: 'Daily Habit', desc: '3-day daily streak', check: (s: any) => s.dailyStreak >= 3 },
   { id: 'daily_7', icon: '🗓️', title: 'Week Warrior', desc: '7-day daily streak', check: (s: any) => s.dailyStreak >= 7 },
   { id: 'daily_30', icon: '📆', title: 'Monthly Devotion', desc: '30-day daily streak', check: (s: any) => s.dailyStreak >= 30 },
-  { id: 'xp_1000', icon: '⭐', title: 'Rising Star', desc: 'Earn 1000 XP', check: (s: any) => s.xp >= 1000 },
-  { id: 'xp_5000', icon: '🌟', title: 'Superstar', desc: 'Earn 5000 XP', check: (s: any) => s.xp >= 5000 },
-  { id: 'xp_25000', icon: '💫', title: 'Galaxy Brain', desc: 'Earn 25000 XP', check: (s: any) => s.xp >= 25000 },
+  { id: 'daily_100', icon: '🔥', title: 'Unbreakable', desc: '100-day daily streak', check: (s: any) => s.dailyStreak >= 100 },
+  { id: 'xp_1000', icon: '⭐', title: 'Rising Star', desc: 'Earn 1,000 XP', check: (s: any) => s.xp >= 1000 },
+  { id: 'xp_5000', icon: '🌟', title: 'Superstar', desc: 'Earn 5,000 XP', check: (s: any) => s.xp >= 5000 },
+  { id: 'xp_25000', icon: '💫', title: 'Galaxy Brain', desc: 'Earn 25,000 XP', check: (s: any) => s.xp >= 25000 },
+  { id: 'xp_100000', icon: '👑', title: 'Brain Emperor', desc: 'Earn 100,000 XP', check: (s: any) => s.xp >= 100000 },
   { id: 'correct_100', icon: '✅', title: 'Sharp Mind', desc: '100 correct answers', check: (s: any) => s.totalCorrect >= 100 },
   { id: 'correct_500', icon: '🧠', title: 'Big Brain', desc: '500 correct answers', check: (s: any) => s.totalCorrect >= 500 },
+  { id: 'correct_1000', icon: '🎓', title: 'Scholar', desc: '1,000 correct answers', check: (s: any) => s.totalCorrect >= 1000 },
+  { id: 'level_5', icon: '📦', title: 'Level 5', desc: 'Reach level 5', check: (s: any) => s.level >= 5 },
   { id: 'level_10', icon: '🎖️', title: 'Level 10', desc: 'Reach level 10', check: (s: any) => s.level >= 10 },
-  // NEW
-  { id: 'explorer', icon: '🧭', title: 'Explorer', desc: 'Play quizzes from 5 categories', check: (s: any) => s.categoriesPlayed >= 5 },
+  { id: 'level_25', icon: '🥇', title: 'Level 25', desc: 'Reach level 25', check: (s: any) => s.level >= 25 },
+  { id: 'level_50', icon: '💎', title: 'Level 50', desc: 'Reach level 50', check: (s: any) => s.level >= 50 },
+  { id: 'explorer', icon: '🧭', title: 'Explorer', desc: 'Play 5 categories', check: (s: any) => s.categoriesPlayed >= 5 },
+  { id: 'explorer_10', icon: '🗺️', title: 'Globetrotter', desc: 'Play 10 categories', check: (s: any) => s.categoriesPlayed >= 10 },
   { id: 'polyglot', icon: '🌐', title: 'Polyglot', desc: 'Play in 3+ languages', check: (s: any) => s.languagesUsed >= 3 },
   { id: 'night_owl', icon: '🦉', title: 'Night Owl', desc: 'Play after midnight', check: (s: any) => s.playedAfterMidnight === true },
   { id: 'early_bird', icon: '🐦', title: 'Early Bird', desc: 'Play before 7 AM', check: (s: any) => s.playedBefore7am === true },
+  { id: 'comeback', icon: '🔄', title: 'Comeback Kid', desc: '5 correct after a wrong answer', check: (s: any) => s.bestStreak >= 5 },
+  { id: 'speed_demon', icon: '⚡', title: 'Speed Demon', desc: 'Answer in under 3 seconds', check: (s: any) => s.fastAnswers >= 1 },
+  { id: 'marathon', icon: '🏃', title: 'Marathon Runner', desc: 'Play 10 quizzes in one day', check: (s: any) => s.quizzesInDay >= 10 },
+  { id: 'all_categories', icon: '🎯', title: 'Know-It-All', desc: 'Play all categories', check: (s: any) => s.categoriesPlayed >= 8 },
+  { id: 'no_hints', icon: '🚫', title: 'No Help Needed', desc: 'Perfect score without hints', check: (s: any) => s.perfectNoHints >= 1 },
+  { id: 'weekend_warrior', icon: '🎉', title: 'Weekend Warrior', desc: 'Play on Saturday or Sunday', check: (s: any) => s.playedWeekend === true },
+  { id: 'first_friend', icon: '🤝', title: 'Social Butterfly', desc: 'Share a result', check: (s: any) => s.sharedResult === true },
 ];
 
 export interface AchievementStats {
@@ -117,6 +131,39 @@ export interface AchievementStats {
   languagesUsed?: number;
   playedAfterMidnight?: boolean;
   playedBefore7am?: boolean;
+  playedWeekend?: boolean;
+  fastAnswers?: number;
+  quizzesInDay?: number;
+  perfectNoHints?: number;
+  sharedResult?: boolean;
+}
+
+// Player rank system
+export const RANKS = [
+  { name: 'Rookie', icon: '🌱', minLevel: 1, color: '#888' },
+  { name: 'Beginner', icon: '🔰', minLevel: 3, color: '#8bc34a' },
+  { name: 'Learner', icon: '📚', minLevel: 5, color: '#4caf50' },
+  { name: 'Scholar', icon: '🎓', minLevel: 8, color: '#00bcd4' },
+  { name: 'Expert', icon: '🧠', minLevel: 12, color: '#2196f3' },
+  { name: 'Master', icon: '🏆', minLevel: 16, color: '#9c27b0' },
+  { name: 'Grandmaster', icon: '👑', minLevel: 22, color: '#e91e63' },
+  { name: 'Legend', icon: '💎', minLevel: 30, color: '#ffd60a' },
+  { name: 'Mythic', icon: '🔥', minLevel: 45, color: '#ff4757' },
+];
+
+export function getRank(level: number) {
+  let rank = RANKS[0];
+  for (const r of RANKS) {
+    if (level >= r.minLevel) rank = r;
+  }
+  return rank;
+}
+
+export function getNextRank(level: number) {
+  for (const r of RANKS) {
+    if (r.minLevel > level) return r;
+  }
+  return null; // max rank
 }
 
 export function checkAchievements(stats: AchievementStats): string[] {
