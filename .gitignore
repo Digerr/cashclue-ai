@@ -49,6 +49,11 @@ yarn-error.log*
 next-env.d.ts
 local-*
 
+# prisma generated client (regenerated at build time)
+node_modules/.prisma
+node_modules/@prisma/client/runtime
+node_modules/@prisma/client/index.d.ts
+
 # internal / sandbox
 .claude
 .z-ai-config
