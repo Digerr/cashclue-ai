@@ -1,11 +1,26 @@
 import { db } from './db';
+import crypto from 'crypto';
 
 export const ANON_COOKIE_NAME = 'brainbolt_uid';
 export const ANON_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 function hashIp(ip: string): string {
   const salt = process.env.CASHCLUE_SALT || process.env.BRAINBOLT_SALT || 'brainbolt-default-salt';
-  return crypto.createHash('sha256').update(ip + salt).digest('hex').slice(0, 32);
+  try {
+    return crypto.createHash('sha256').update(ip + salt).digest('hex').slice(0, 32);
+  } catch {
+    // Fallback for edge runtime where crypto.createHash is not available
+    return ip.slice(0, 32).padEnd(32, '0');
+  }
+}
+
+function generateCookie(): string {
+  try {
+    return crypto.randomBytes(16).toString('hex');
+  } catch {
+    // Fallback
+    return Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 }
 
 function getClientIp(req: any): string {
@@ -29,7 +44,7 @@ export async function resolveAnonUser(req: any) {
     }
   }
 
-  const newCookie = crypto.randomBytes(16).toString('hex');
+  const newCookie = generateCookie();
   const user = await db.user.create({ data: { cookie: newCookie } });
   return user;
 }
