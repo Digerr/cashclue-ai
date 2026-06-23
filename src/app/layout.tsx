@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { LanguageProvider } from "@/components/cashclue/language-context";
 import { ColorThemeProvider } from "@/components/cashclue/color-theme-context";
+import { TelegramIntegration } from "@/components/cashclue/telegram-integration";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -110,6 +111,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: "cover",
+  userScalable: true,
 };
 
 const jsonLd = {
@@ -164,6 +167,7 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <ColorThemeProvider>
+            <TelegramIntegration />
             {children}
             <Toaster />
           </ColorThemeProvider>

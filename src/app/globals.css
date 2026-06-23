@@ -349,3 +349,39 @@ html, body {
   min-height: 100vh;
   min-height: 100dvh;
 }
+
+/* Print styles for "Save PDF" button */
+@media print {
+  header, footer, nav, [aria-label="Toggle menu"], .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .grid-bg, [class*="blur"] {
+    display: none !important;
+  }
+  /* Cards: remove dark backgrounds, use borders only */
+  [class*="bg-card"], [class*="bg-background"] {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+  }
+  /* Force light-mode text colors for print */
+  * {
+    color: black !important;
+    border-color: #ccc !important;
+  }
+  a {
+    text-decoration: underline;
+  }
+  /* Page breaks between idea cards */
+  .print-break {
+    page-break-before: always;
+  }
+}

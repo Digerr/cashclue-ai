@@ -23,6 +23,8 @@ import {
   GraduationCap,
   BedDouble,
   RefreshCw,
+  Share2,
+  Printer,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -261,6 +263,31 @@ export function Wizard({ initialTheme = 'sideHustle' }: { initialTheme?: ThemeId
   const [budget, setBudget] = useState(500);
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<HustlePlan | null>(null);
+
+  // Persist last plan to localStorage so a page refresh doesn't lose it
+  const PLAN_STORAGE_KEY = 'cashclue:lastPlan';
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const stored = window.localStorage.getItem(PLAN_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as HustlePlan;
+        if (parsed?.ideas?.length > 0) {
+          setPlan(parsed);
+        }
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (plan) {
+      window.localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(plan));
+    } else {
+      window.localStorage.removeItem(PLAN_STORAGE_KEY);
+    }
+  }, [plan]);
   const [credits, setCreditsState] = useState<number>(FREE_CREDITS);
   const [showPaywall, setShowPaywall] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(0);
@@ -635,6 +662,38 @@ export function Wizard({ initialTheme = 'sideHustle' }: { initialTheme?: ThemeId
               <Button onClick={reset} size="lg" variant="outline" className="font-semibold">
                 <RefreshCw className="h-4 w-4 mr-2" />
                 {t.res_regenerate}
+              </Button>
+              <Button
+                onClick={async () => {
+                  const shareData = {
+                    title: 'CashClue AI — my money-making plan',
+                    text: plan.executiveSummary?.slice(0, 200) || 'Check out my AI-generated side hustle plan',
+                    url: typeof window !== 'undefined' ? window.location.href : 'https://cashclue.ai',
+                  };
+                  try {
+                    if (navigator.share) {
+                      await navigator.share(shareData);
+                    } else {
+                      await navigator.clipboard.writeText(`${shareData.title}\n\n${shareData.text}\n\n${shareData.url}`);
+                      alert('Link copied to clipboard!');
+                    }
+                  } catch {}
+                }}
+                size="lg"
+                variant="outline"
+                className="font-semibold"
+              >
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+              <Button
+                onClick={() => window.print()}
+                size="lg"
+                variant="outline"
+                className="font-semibold"
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                Save PDF
               </Button>
               {credits > 0 ? (
                 <p className="text-sm text-muted-foreground self-center">
