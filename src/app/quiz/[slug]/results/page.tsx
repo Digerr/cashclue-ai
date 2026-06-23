@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLang } from '@/components/brainbolt/language-context';
+import { useCountUp } from '@/hooks/use-count-up';
 import { useSound } from '@/hooks/use-sound';
 import { Confetti } from '@/components/brainbolt/confetti';
 import { SEED_QUIZZES, getLocalized } from '@/lib/quiz-data';
@@ -18,6 +19,7 @@ export default function ResultsPage() {
   const { t, lang } = useLang();
   const { play } = useSound();
   const [result, setResult] = useState<any>(null);
+  const animatedScore = useCountUp(result?.score || 0, 1500, 300);
   const [showReview, setShowReview] = useState(false);
 
   const slug = params.slug;
@@ -73,7 +75,7 @@ export default function ResultsPage() {
             <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: messageColor }}>{message}</h1>
             <p className="text-sm text-muted-foreground mb-6">{quizTitle}</p>
             <div className="inline-flex flex-col items-center">
-              <div className="text-6xl sm:text-7xl font-bold font-mono tabular-nums" style={{ color: messageColor }}>{result.score}</div>
+              <div className="text-6xl sm:text-7xl font-bold font-mono tabular-nums animate-pop" style={{ color: messageColor }}>{animatedScore}</div>
               <div className="text-xs text-muted-foreground uppercase tracking-widest mt-1">{t.results_xp_earned}</div>
             </div>
 

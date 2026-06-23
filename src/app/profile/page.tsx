@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Trophy, Zap, Target, Flame, Award, Edit2, Save } from 'lucide-react';
+import { ArrowLeft, Trophy, Zap, Target, Flame, Award, Edit2, Save, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -13,6 +13,7 @@ import { ACHIEVEMENTS } from '@/lib/auth';
 export default function ProfilePage() {
   const { t } = useLang();
   const [profile, setProfile] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('🎯');
@@ -23,6 +24,7 @@ export default function ProfilePage() {
       setName(d.user?.name || '');
       setAvatar(d.user?.avatar || '🎯');
     });
+    fetch('/api/stats').then(r => r.json()).then(d => setStats(d)).catch(() => {});
   }, []);
 
   const save = async () => {
@@ -114,6 +116,40 @@ export default function ProfilePage() {
         <StatCard icon={Flame} label={t.profile_best_streak} value={profile.bestStreak} accent="#fb923c" />
         <StatCard icon={Award} label={t.profile_daily_streak} value={profile.dailyStreak} accent="var(--gold)" />
       </div>
+
+      {/* Category stats */}
+      {stats && stats.categories && stats.categories.length > 0 && (
+        <Card className="border-border bg-card/70 backdrop-blur mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              Category Stats
+              <Badge variant="outline" className="ml-auto text-[10px]">{stats.overallAccuracy}% accuracy</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2.5">
+            {stats.categories.slice(0, 8).map((cat: any) => (
+              <div key={cat.category} className="flex items-center gap-3">
+                <span className="text-xs font-medium w-24 truncate">{cat.category}</span>
+                <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${
+                      cat.accuracy >= 70 ? 'bg-primary' :
+                      cat.accuracy >= 40 ? 'bg-gold' : 'bg-destructive'
+                    }`}
+                    style={{ width: `${cat.accuracy}%` }}
+                  />
+                </div>
+                <span className={`text-xs font-mono font-bold w-8 text-right ${
+                  cat.accuracy >= 70 ? 'text-primary' :
+                  cat.accuracy >= 40 ? 'text-gold' : 'text-destructive'
+                }`}>{cat.accuracy}%</span>
+                <span className="text-[10px] text-muted-foreground w-12 text-right font-mono">{cat.played}x</span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Achievements preview */}
       <Card className="border-border bg-card/70 backdrop-blur">

@@ -46,22 +46,78 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   useEffect(() => {
     const seed = SEED_QUIZZES.find((q) => q.slug === slug);
     if (!seed) { router.push('/categories'); return; }
-    setQuiz({
-      slug: seed.slug,
-      title: getLocalized(seed.title, lang),
-      icon: seed.icon,
-      color: seed.color,
-      questions: seed.questions.map((q, i) => ({
+
+    // Fetch user level for difficulty adaptation
+    fetch('/api/me').then(r => r.json()).then(userData => {
+      const userLevel = userData.user?.level || 1;
+
+      // Difficulty adaptation:
+      // Level 1-3: normal questions, normal time (15s)
+      // Level 4-7: shuffle options, slightly less time (13s)
+      // Level 8+: shuffle options + shuffle questions, less time (10s)
+      const adaptTime = userLevel >= 8 ? 10 : userLevel >= 4 ? 13 : 15;
+      const shouldShuffleOptions = userLevel >= 4;
+      const shouldShuffleQuestions = userLevel >= 8;
+
+      // Prepare questions
+      let questions = seed.questions.map((q, i) => {
+        let options = q.options.map(o => getLocalized(o, lang));
+        let correctIdx = q.correctIndex;
+
+        // Shuffle options for higher levels
+        if (shouldShuffleOptions) {
+          const indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+          const newOptions = indices.map(idx => getLocalized(q.options[idx], lang));
+          correctIdx = indices.indexOf(q.correctIndex);
+          options = newOptions;
+        }
+
+        return {
+          id: `${seed.slug}-q${i}`,
+          text: getLocalized(q.text, lang),
+          options,
+          correctIndex: correctIdx,
+          timeLimit: adaptTime,
+          order: i,
+        };
+      });
+
+      // Shuffle question order for level 8+
+      if (shouldShuffleQuestions) {
+        questions = questions.sort(() => Math.random() - 0.5);
+      }
+
+      setQuiz({
+        slug: seed.slug,
+        title: getLocalized(seed.title, lang),
+        icon: seed.icon,
+        color: seed.color,
+        questions,
+        adaptedLevel: userLevel,
+      });
+      setTimeLeft(questions[0].timeLimit);
+      setLoading(false);
+    }).catch(() => {
+      // Fallback: no adaptation
+      const questions = seed.questions.map((q, i) => ({
         id: `${seed.slug}-q${i}`,
         text: getLocalized(q.text, lang),
-        options: q.options.map((o) => getLocalized(o, lang)),
-        correctIndex: q.correctIndex, // ← NOW INCLUDED for client-side feedback
-        timeLimit: q.timeLimit || 15,
+        options: q.options.map(o => getLocalized(o, lang)),
+        correctIndex: q.correctIndex,
+        timeLimit: 15,
         order: i,
-      })),
+      }));
+      setQuiz({
+        slug: seed.slug,
+        title: getLocalized(seed.title, lang),
+        icon: seed.icon,
+        color: seed.color,
+        questions,
+        adaptedLevel: 1,
+      });
+      setTimeLeft(15);
+      setLoading(false);
     });
-    setTimeLeft(seed.questions[0].timeLimit || 15);
-    setLoading(false);
   }, [slug, lang, router]);
 
   const question = quiz?.questions[currentIdx];
@@ -190,6 +246,8 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
             'text-primary border-primary/30'
           }`}>
             {mode === 'time-attack' ? '⚡ Attack' : mode === 'survival' ? '💀 Survival' : '🎯'}
+            {quiz.adaptedLevel >= 8 && <span className="ml-1 text-red-400">🔥HARD</span>}
+            {quiz.adaptedLevel >= 4 && quiz.adaptedLevel < 8 && <span className="ml-1 text-gold">⚡MED</span>}
           </Badge>
         </div>
       </div>

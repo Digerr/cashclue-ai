@@ -3,59 +3,90 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 
 export type ThemeId = 'emerald' | 'cyber' | 'sunset' | 'mono' | 'royal';
+export type Mode = 'dark' | 'light';
 
 export const THEMES: { id: ThemeId; label: string; swatch: string[] }[] = [
-  { id: 'emerald', label: 'Emerald Gold', swatch: ['#34d399', '#fbbf24', '#0a1410'] },
-  { id: 'cyber', label: 'Cyberpunk', swatch: ['#ec4899', '#22d3ee', '#1a0a2e'] },
-  { id: 'sunset', label: 'Sunset', swatch: ['#fb923c', '#a855f7', '#2a0f1a'] },
-  { id: 'mono', label: 'Monolith', swatch: ['#ffffff', '#888888', '#0a0a0a'] },
-  { id: 'royal', label: 'Royal Purple', swatch: ['#a855f7', '#fbbf24', '#1a0a2e'] },
+  { id: 'emerald', label: 'Emerald', swatch: ['#00e676', '#ffd60a', '#0c0f14'] },
+  { id: 'cyber', label: 'Cyber', swatch: ['#e84393', '#00cec9', '#0a0a14'] },
+  { id: 'sunset', label: 'Sunset', swatch: ['#ff6b35', '#fdcb6e', '#0d0a08'] },
+  { id: 'mono', label: 'Mono', swatch: ['#ffffff', '#999', '#0a0a0a'] },
+  { id: 'royal', label: 'Royal', swatch: ['#a855f7', '#ffd60a', '#0a0814'] },
 ];
 
 const DEFAULT_THEME: ThemeId = 'emerald';
-const STORAGE_KEY = 'brainbolt:theme';
+const DEFAULT_MODE: Mode = 'dark';
+const THEME_KEY = 'brainbolt:theme';
+const MODE_KEY = 'brainbolt:mode';
 
 interface ThemeCtx {
   theme: ThemeId;
+  mode: Mode;
   setTheme: (t: ThemeId) => void;
+  setMode: (m: Mode) => void;
+  toggleMode: () => void;
 }
 
 const Ctx = createContext<ThemeCtx>({
   theme: DEFAULT_THEME,
+  mode: DEFAULT_MODE,
   setTheme: () => {},
+  setMode: () => {},
+  toggleMode: () => {},
 });
+
+function applyTheme(t: ThemeId, m: Mode) {
+  if (typeof document === 'undefined') return;
+  document.documentElement.setAttribute('data-theme', t);
+  document.documentElement.setAttribute('data-mode', m);
+}
 
 export function ColorThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeId>(DEFAULT_THEME);
+  const [mode, setModeState] = useState<Mode>(DEFAULT_MODE);
 
-  // On client mount: read theme from localStorage and apply to <html>.
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY) as ThemeId | null;
-      const t = stored && THEMES.some((x) => x.id === stored) ? stored : DEFAULT_THEME;
-      document.documentElement.setAttribute('data-theme', t);
+      const storedTheme = localStorage.getItem(THEME_KEY) as ThemeId | null;
+      const storedMode = localStorage.getItem(MODE_KEY) as Mode | null;
+      const t = storedTheme && THEMES.some(x => x.id === storedTheme) ? storedTheme : DEFAULT_THEME;
+      const m = storedMode === 'light' || storedMode === 'dark' ? storedMode : DEFAULT_MODE;
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setThemeState(t);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setModeState(m);
+      applyTheme(t, m);
     } catch {
-      document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+      applyTheme(DEFAULT_THEME, DEFAULT_MODE);
     }
   }, []);
 
   const setTheme = useCallback((t: ThemeId) => {
     setThemeState(t);
-    if (typeof document !== 'undefined') {
-      document.documentElement.setAttribute('data-theme', t);
-    }
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, t);
-    }
-  }, []);
+    applyTheme(t, mode);
+    if (typeof window !== 'undefined') localStorage.setItem(THEME_KEY, t);
+  }, [mode]);
 
-  return <Ctx.Provider value={{ theme, setTheme }}>{children}</Ctx.Provider>;
+  const setMode = useCallback((m: Mode) => {
+    setModeState(m);
+    applyTheme(theme, m);
+    if (typeof window !== 'undefined') localStorage.setItem(MODE_KEY, m);
+  }, [theme]);
+
+  const toggleMode = useCallback(() => {
+    const newMode = mode === 'dark' ? 'light' : 'dark';
+    setModeState(newMode);
+    applyTheme(theme, newMode);
+    if (typeof window !== 'undefined') localStorage.setItem(MODE_KEY, newMode);
+  }, [mode, theme]);
+
+  return (
+    <Ctx.Provider value={{ theme, mode, setTheme, setMode, toggleMode }}>
+      {children}
+    </Ctx.Provider>
+  );
 }
 
 export function useColorTheme(): ThemeCtx {
   return useContext(Ctx);
 }
-
