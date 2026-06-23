@@ -2,28 +2,27 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useMemo, Suspense } from 'react';
-import { Search, Shuffle, ArrowLeft, Target } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Suspense, useState, useMemo, useEffect } from 'react';
+import { Search, Shuffle, ChevronLeft } from 'lucide-react';
 import { useLang } from '@/components/brainbolt/language-context';
+import { useFeedback } from '@/hooks/use-feedback';
 import { SEED_QUIZZES, getLocalized } from '@/lib/quiz-data';
 
-export default function CategoriesPageWrapper() {
+export default function CategoriesPage() {
   return (
-    <Suspense fallback={<div className="container mx-auto max-w-7xl px-4 py-20 text-center text-muted-foreground">Loading...</div>}>
-      <CategoriesPage />
+    <Suspense fallback={<div className="mx-auto max-w-2xl px-4 py-20 text-center text-muted-foreground">Loading...</div>}>
+      <CategoriesInner />
     </Suspense>
   );
 }
 
-function CategoriesPage() {
+function CategoriesInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t, lang } = useLang();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('all');
+  const { trigger } = useFeedback();
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('all');
   const [sortBy, setSortBy] = useState<'popular' | 'difficulty' | 'az'>('popular');
 
   const mode = searchParams.get('mode') || 'classic';
@@ -41,9 +40,9 @@ function CategoriesPage() {
 
   const categories = useMemo(() => ['all', ...Array.from(new Set(quizzes.map(q => q.category)))], [quizzes]);
 
-  let filtered = categoryFilter === 'all' ? quizzes : quizzes.filter(q => q.category === categoryFilter);
-  if (searchQuery.trim()) {
-    const sq = searchQuery.toLowerCase();
+  let filtered = category === 'all' ? quizzes : quizzes.filter(q => q.category === category);
+  if (search.trim()) {
+    const sq = search.toLowerCase();
     filtered = filtered.filter(q => q.title.toLowerCase().includes(sq) || q.description.toLowerCase().includes(sq));
   }
   if (sortBy === 'az') filtered = [...filtered].sort((a, b) => a.title.localeCompare(b.title));
@@ -53,90 +52,94 @@ function CategoriesPage() {
   }
 
   const playRandom = () => {
-    const random = SEED_QUIZZES[Math.floor(Math.random() * SEED_QUIZZES.length)];
-    router.push(`/quiz/${random.slug}?mode=${mode}`);
+    trigger('select');
+    const r = SEED_QUIZZES[Math.floor(Math.random() * SEED_QUIZZES.length)];
+    router.push(`/quiz/${r.slug}?mode=${mode}`);
   };
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
-        <div>
-          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-2">
-            <ArrowLeft className="h-4 w-4" /> Home
-          </Link>
-          <h1 className="text-3xl font-bold">{t.quizzes_title}</h1>
-          <p className="text-sm text-muted-foreground mt-1">{t.quizzes_sub}</p>
-        </div>
-        <Button onClick={playRandom} variant="outline" className="font-semibold">
-          <Shuffle className="h-4 w-4 mr-2" /> Random quiz
-        </Button>
+    <div className="mx-auto max-w-2xl px-4 py-6">
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <Link href="/" onClick={() => trigger('tap')} className="press">
+          <ChevronLeft className="h-5 w-5" />
+        </Link>
+        <h1 className="text-2xl font-bold">{t.quizzes_title}</h1>
+        <button onClick={playRandom} className="ml-auto flex items-center gap-1 text-xs text-muted-foreground hover:text-primary press font-mono">
+          <Shuffle className="h-3.5 w-3.5" /> RANDOM
+        </button>
       </div>
 
-      <div className="flex items-center gap-3 flex-wrap mb-4">
-        <div className="relative flex-1 min-w-[200px] max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-          <input type="text" placeholder={t.quizzes_search} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="h-9 pl-9 pr-3 rounded-md border border-border bg-background/60 text-sm w-full" />
-        </div>
-        <div className="flex gap-1.5">
-          {(['popular', 'difficulty', 'az'] as const).map(s => (
-            <button key={s} onClick={() => setSortBy(s)} className={`px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wide font-medium transition-all ${sortBy === s ? 'bg-accent text-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
-              {s === 'az' ? 'A-Z' : s}
-            </button>
-          ))}
-        </div>
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <input
+          type="text"
+          placeholder={t.quizzes_search}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full h-10 pl-10 pr-3 bg-card border border-border rounded-lg text-sm focus:border-primary focus:outline-none transition-colors"
+        />
       </div>
 
-      <div className="flex gap-1.5 flex-wrap mb-6">
+      {/* Category chips */}
+      <div className="flex gap-1.5 flex-wrap mb-4">
         {categories.map(c => (
-          <button key={c} onClick={() => setCategoryFilter(c)} className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${categoryFilter === c ? 'bg-[var(--emerald-glow)] text-black' : 'border border-border text-muted-foreground hover:text-foreground'}`}>
-            {c === 'all' ? t.quizzes_all : c}
+          <button
+            key={c}
+            onClick={() => { trigger('tap'); setCategory(c); }}
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-all press ${
+              category === c ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground border border-border'
+            }`}
+          >
+            {c === 'all' ? 'All' : c}
           </button>
         ))}
       </div>
 
+      {/* Sort */}
+      <div className="flex gap-1.5 mb-4">
+        {(['popular', 'difficulty', 'az'] as const).map(s => (
+          <button
+            key={s}
+            onClick={() => { trigger('tap'); setSortBy(s); }}
+            className={`px-2 py-0.5 rounded text-[10px] uppercase tracking-wide font-bold transition-colors press ${
+              sortBy === s ? 'text-primary' : 'text-muted-foreground'
+            }`}
+          >
+            {s === 'az' ? 'A-Z' : s}
+          </button>
+        ))}
+      </div>
+
+      {/* Quiz list — NOT grid, LIST */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-muted-foreground">
-          <Search className="h-12 w-12 mx-auto mb-3 opacity-40" />
-          <div className="font-medium">{t.quizzes_empty}</div>
-        </div>
+        <div className="text-center py-16 text-muted-foreground text-sm">{t.quizzes_empty}</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="space-y-px stagger">
           {filtered.map(quiz => (
-            <QuizCard key={quiz.slug} quiz={quiz} t={t} mode={mode} />
+            <Link
+              key={quiz.slug}
+              href={`/quiz/${quiz.slug}?mode=${mode}`}
+              onClick={() => trigger('select')}
+              className="flex items-center gap-3 p-3.5 bg-card hover:bg-accent rounded-lg press transition-colors group"
+            >
+              <span className="text-2xl shrink-0">{quiz.icon}</span>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-sm truncate">{quiz.title}</div>
+                <div className="text-[10px] text-muted-foreground truncate">{quiz.description}</div>
+              </div>
+              <div className="text-right shrink-0">
+                <div className="text-[10px] font-mono text-muted-foreground">{quiz.questionCount}Q</div>
+                <div className={`text-[9px] uppercase font-bold ${
+                  quiz.difficulty === 'easy' ? 'text-primary' :
+                  quiz.difficulty === 'medium' ? 'text-gold' : 'text-destructive'
+                }`}>{quiz.difficulty}</div>
+              </div>
+            </Link>
           ))}
         </div>
       )}
     </div>
-  );
-}
-
-function QuizCard({ quiz, t, mode }: any) {
-  const difficultyColors: Record<string, string> = {
-    easy: 'text-[var(--emerald-glow)] border-[var(--emerald-glow)]/40',
-    medium: 'text-[var(--gold)] border-[var(--gold)]/40',
-    hard: 'text-orange-400 border-orange-400/40',
-  };
-  return (
-    <Link href={`/quiz/${quiz.slug}?mode=${mode}`}>
-      <Card className="group border-border bg-card/60 backdrop-blur overflow-hidden transition-all hover:border-[var(--emerald-glow)]/40 hover:-translate-y-0.5 h-full">
-        <CardContent className="pt-5 pb-5">
-          <div className="flex items-start gap-3 mb-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl" style={{ background: quiz.color + '20' }}>{quiz.icon}</div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-bold leading-tight truncate">{quiz.title}</h3>
-              <div className="flex items-center gap-2 mt-1 flex-wrap">
-                <Badge variant="outline" className="text-[10px] py-0 h-4">{quiz.category}</Badge>
-                <Badge variant="outline" className={`text-[10px] py-0 h-4 ${difficultyColors[quiz.difficulty]}`}>{t[`difficulty_${quiz.difficulty}`]}</Badge>
-              </div>
-            </div>
-          </div>
-          <p className="text-xs text-muted-foreground line-clamp-2 mb-3 min-h-[2rem]">{quiz.description}</p>
-          <div className="flex items-center justify-between gap-2">
-            <span className="flex items-center gap-1 text-[10px] text-muted-foreground"><Target className="h-3 w-3" /> {quiz.questionCount} {t.quiz_questions}</span>
-            <span className="text-xs font-semibold text-[var(--emerald-glow)]">Play →</span>
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
   );
 }

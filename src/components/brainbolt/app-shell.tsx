@@ -2,7 +2,7 @@
 
 import { Header } from '@/components/brainbolt/header';
 import { Footer } from '@/components/brainbolt/footer';
-import { SoundToggle } from '@/components/brainbolt/sound-toggle';
+import { FeedbackToggle } from '@/components/brainbolt/feedback-toggle';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -10,7 +10,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      <SoundToggle />
+      <FeedbackToggle />
     </div>
   );
 }

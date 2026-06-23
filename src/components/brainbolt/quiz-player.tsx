@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play, Clock, Flame, Trophy, Zap, Target, Check, X, Home } from 'lucide-react';
+import { useFeedback } from '@/hooks/use-feedback';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -22,6 +23,7 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
   const router = useRouter();
   const { t, lang } = useLang();
   const { play } = useSound();
+  const { trigger } = useFeedback();
 
   const [quiz, setQuiz] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -216,7 +218,7 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
               return (
                 <button
                   key={i}
-                  onClick={() => { if (!showFeedback) { handleAnswer(i); play('click'); } }}
+                  onClick={() => { if (!showFeedback) { handleAnswer(i); play('click'); trigger('select'); } }}
                   disabled={showFeedback}
                   className={`flex items-center gap-3 p-3.5 rounded-lg border text-left transition-all ${
                     showFeedback && isSelected ? 'border-[var(--emerald-glow)] bg-[var(--emerald-glow)]/10 ring-1 ring-[var(--emerald-glow)]/40 scale-[1.02]' :
