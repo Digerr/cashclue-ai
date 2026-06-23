@@ -193,7 +193,7 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
         </div>
       )}
 
-      <Card className={`border-border bg-card/70 backdrop-blur-xl transition-all duration-200 ${slideAnim === 'in' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+      <Card className={`border-border bg-card shadow-card transition-all duration-300 ${slideAnim === 'in' ? 'animate-slide-in-right' : 'animate-slide-out-left'}`}>
         <CardContent className="pt-6 pb-6">
           {!isTimeAttack && (
             <>
@@ -210,7 +210,7 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
             </>
           )}
 
-          <h2 className="text-xl sm:text-2xl font-bold mb-5 leading-snug">{question.text}</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 leading-snug">{question.text}</h2>
 
           <div className="grid gap-2.5">
             {question.options.map((opt: string, i: number) => {
@@ -220,30 +220,30 @@ export function QuizPlayer({ slug, mode, isDaily = false }: { slug: string; mode
                   key={i}
                   onClick={() => { if (!showFeedback) { handleAnswer(i); play('click'); trigger('select'); } }}
                   disabled={showFeedback}
-                  className={`flex items-center gap-3 p-3.5 rounded-lg border text-left transition-all ${
-                    showFeedback && isSelected ? 'border-[var(--emerald-glow)] bg-[var(--emerald-glow)]/10 ring-1 ring-[var(--emerald-glow)]/40 scale-[1.02]' :
-                    showFeedback ? 'border-border opacity-50' : 'border-border bg-background/40 hover:border-[var(--emerald-glow)]/40 hover:bg-accent/30'
+                  className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all press ${
+                    showFeedback && isSelected ? 'border-primary bg-primary/10 ring-2 ring-primary/30 scale-[1.02] shadow-glow' :
+                    showFeedback ? 'border-border opacity-40' : 'border-border bg-card hover:border-primary/40 hover:bg-accent'
                   }`}
                 >
-                  <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold transition-all ${
-                    showFeedback && isSelected ? 'border-[var(--emerald-glow)] bg-[var(--emerald-glow)] text-black' : 'border-border text-muted-foreground'
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-2 text-xs font-bold transition-all ${
+                    showFeedback && isSelected ? 'border-primary bg-primary text-primary-foreground' : 'border-border text-muted-foreground'
                   }`}>{String.fromCharCode(65 + i)}</div>
-                  <span className="flex-1 text-sm">{opt}</span>
-                  {showFeedback && isSelected && <Check className="h-4 w-4 text-[var(--emerald-glow)]" />}
+                  <span className="flex-1 text-sm font-medium">{opt}</span>
+                  {showFeedback && isSelected && <Check className="h-5 w-5 text-primary shrink-0" />}
                 </button>
               );
             })}
           </div>
 
           {!showFeedback && (
-            <div className="mt-4 text-[10px] text-muted-foreground text-center">
-              Press <kbd className="px-1.5 py-0.5 rounded border border-border bg-background/60 font-mono">1</kbd>-<kbd className="px-1.5 py-0.5 rounded border border-border bg-background/60 font-mono">4</kbd> to answer
+            <div className="mt-5 text-[10px] text-muted-foreground text-center">
+              Press <kbd className="px-1.5 py-0.5 rounded border border-border bg-card font-mono text-[9px]">1</kbd>-<kbd className="px-1.5 py-0.5 rounded border border-border bg-card font-mono text-[9px]">4</kbd> or tap
             </div>
           )}
 
           {showFeedback && (
             <div className="mt-6 flex justify-end">
-              <Button onClick={handleNext} disabled={submitting} size="lg" className="bg-[var(--emerald-glow)] text-black hover:bg-[var(--emerald-glow)]/90 font-semibold">
+              <Button onClick={handleNext} disabled={submitting} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-xl px-8 h-12">
                 {submitting ? 'Loading...' : isLast || isTimeAttack ? t.player_finish : t.player_next}
               </Button>
             </div>

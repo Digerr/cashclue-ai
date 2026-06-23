@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useState, useMemo, useEffect } from 'react';
+import { Suspense, useState, useMemo } from 'react';
 import { Search, Shuffle, ChevronLeft } from 'lucide-react';
 import { useLang } from '@/components/brainbolt/language-context';
 import { useFeedback } from '@/hooks/use-feedback';
@@ -10,7 +10,7 @@ import { SEED_QUIZZES, getLocalized } from '@/lib/quiz-data';
 
 export default function CategoriesPage() {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-2xl px-4 py-20 text-center text-muted-foreground">Loading...</div>}>
+    <Suspense fallback={<div className="mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">Loading...</div>}>
       <CategoriesInner />
     </Suspense>
   );
@@ -58,38 +58,38 @@ function CategoriesInner() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-6">
+    <div className="mx-auto max-w-3xl px-4 py-6">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Link href="/" onClick={() => trigger('tap')} className="press">
           <ChevronLeft className="h-5 w-5" />
         </Link>
         <h1 className="text-2xl font-bold">{t.quizzes_title}</h1>
-        <button onClick={playRandom} className="ml-auto flex items-center gap-1 text-xs text-muted-foreground hover:text-primary press font-mono">
-          <Shuffle className="h-3.5 w-3.5" /> RANDOM
+        <button onClick={playRandom} className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border text-xs font-medium press hover:border-primary/30">
+          <Shuffle className="h-3.5 w-3.5" /> Random
         </button>
       </div>
 
       {/* Search */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <input
           type="text"
           placeholder={t.quizzes_search}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full h-10 pl-10 pr-3 bg-card border border-border rounded-lg text-sm focus:border-primary focus:outline-none transition-colors"
+          className="w-full h-11 pl-11 pr-4 bg-card border border-border rounded-xl text-sm focus:border-primary/40 focus:outline-none transition-colors"
         />
       </div>
 
       {/* Category chips */}
-      <div className="flex gap-1.5 flex-wrap mb-4">
+      <div className="flex gap-1.5 flex-wrap mb-3">
         {categories.map(c => (
           <button
             key={c}
             onClick={() => { trigger('tap'); setCategory(c); }}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-all press ${
-              category === c ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground border border-border'
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all press ${
+              category === c ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground border border-border hover:text-foreground'
             }`}
           >
             {c === 'all' ? 'All' : c}
@@ -98,12 +98,12 @@ function CategoriesInner() {
       </div>
 
       {/* Sort */}
-      <div className="flex gap-1.5 mb-4">
+      <div className="flex gap-1.5 mb-5">
         {(['popular', 'difficulty', 'az'] as const).map(s => (
           <button
             key={s}
             onClick={() => { trigger('tap'); setSortBy(s); }}
-            className={`px-2 py-0.5 rounded text-[10px] uppercase tracking-wide font-bold transition-colors press ${
+            className={`px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wide font-bold transition-colors press ${
               sortBy === s ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
@@ -112,30 +112,29 @@ function CategoriesInner() {
         ))}
       </div>
 
-      {/* Quiz list — NOT grid, LIST */}
+      {/* Quiz grid */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-muted-foreground text-sm">{t.quizzes_empty}</div>
+        <div className="text-center py-20 text-muted-foreground text-sm">{t.quizzes_empty}</div>
       ) : (
-        <div className="space-y-px stagger">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 stagger">
           {filtered.map(quiz => (
             <Link
               key={quiz.slug}
               href={`/quiz/${quiz.slug}?mode=${mode}`}
               onClick={() => trigger('select')}
-              className="flex items-center gap-3 p-3.5 bg-card hover:bg-accent rounded-lg press transition-colors group"
+              className="block p-4 rounded-xl bg-card border border-border lift press hover:border-primary/30 transition-colors group"
             >
-              <span className="text-2xl shrink-0">{quiz.icon}</span>
-              <div className="flex-1 min-w-0">
-                <div className="font-bold text-sm truncate">{quiz.title}</div>
-                <div className="text-[10px] text-muted-foreground truncate">{quiz.description}</div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">{quiz.icon}</span>
+                <span className={`text-[8px] uppercase font-bold px-1.5 py-0.5 rounded ${
+                  quiz.difficulty === 'easy' ? 'bg-primary/10 text-primary' :
+                  quiz.difficulty === 'medium' ? 'bg-gold/10 text-gold' :
+                  'bg-destructive/10 text-destructive'
+                }`}>{quiz.difficulty}</span>
               </div>
-              <div className="text-right shrink-0">
-                <div className="text-[10px] font-mono text-muted-foreground">{quiz.questionCount}Q</div>
-                <div className={`text-[9px] uppercase font-bold ${
-                  quiz.difficulty === 'easy' ? 'text-primary' :
-                  quiz.difficulty === 'medium' ? 'text-gold' : 'text-destructive'
-                }`}>{quiz.difficulty}</div>
-              </div>
+              <div className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">{quiz.title}</div>
+              <div className="text-[10px] text-muted-foreground line-clamp-2 mb-2">{quiz.description}</div>
+              <div className="text-[10px] font-mono text-muted-foreground">{quiz.questionCount}Q · {quiz.category}</div>
             </Link>
           ))}
         </div>
