@@ -1,6 +1,3 @@
-'use client';
-
-import { createContext, useContext } from 'react';
 import { db } from './db';
 
 export const ANON_COOKIE_NAME = 'brainbolt_uid';

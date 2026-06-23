@@ -7,17 +7,12 @@ import { THEMES, useColorTheme } from './color-theme-context';
 export function ColorThemeSwitcher() {
   const { theme, setTheme, mode, toggleMode } = useColorTheme();
   const [open, setOpen] = useState(false);
-  const [dropdownPos, setDropdownPos] = useState<{ top: number } | null>(null);
-  const btnRef = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    if (btnRef.current) {
-      const rect = btnRef.current.getBoundingClientRect();
-      setDropdownPos({ top: rect.bottom + 4 });
-    }
     const handler = (e: MouseEvent) => {
-      if (btnRef.current && !btnRef.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -26,24 +21,21 @@ export function ColorThemeSwitcher() {
   const current = THEMES.find(t => t.id === theme) ?? THEMES[0];
 
   return (
-    <>
+    <div className="relative" ref={ref}>
       <div className="flex items-center gap-1">
         <button
           type="button"
           onClick={toggleMode}
           className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors press"
           aria-label="Toggle dark/light"
-          title={mode === 'dark' ? 'Light' : 'Dark'}
         >
           {mode === 'dark' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
         </button>
         <button
-          ref={btnRef}
           type="button"
           onClick={() => setOpen(o => !o)}
           className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors press"
           aria-label="Switch color theme"
-          title={current.label}
         >
           <div className="flex h-4 w-4 overflow-hidden rounded-sm border border-border">
             {current.swatch.slice(0, 2).map((c, i) => (
@@ -53,15 +45,8 @@ export function ColorThemeSwitcher() {
         </button>
       </div>
 
-      {/* Dropdown — fixed positioning, opens left from button */}
-      {open && dropdownPos && (
-        <div
-          className="fixed z-[200] w-48 rounded-xl border border-border bg-popover shadow-lg-card overflow-hidden max-h-[70vh] overflow-y-auto animate-scale-in"
-          style={{
-            right: '8px',
-            top: dropdownPos.top + 'px',
-          }}
-        >
+      {open && (
+        <div className="absolute right-0 top-full mt-1 z-[60] w-44 rounded-xl border border-border bg-popover shadow-lg-card overflow-hidden">
           <div className="px-3 py-2 text-[10px] uppercase tracking-wider text-muted-foreground border-b border-border">
             Color theme
           </div>
@@ -83,6 +68,6 @@ export function ColorThemeSwitcher() {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
