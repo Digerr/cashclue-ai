@@ -2,7 +2,7 @@
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { ArrowLeft, Target, Zap, Skull, Clock, Play, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +10,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useLang } from '@/components/brainbolt/language-context';
 import { SEED_QUIZZES, getLocalized } from '@/lib/quiz-data';
 
-export default function QuizPage() {
+export default function QuizPageWrapper() {
+  return (
+    <Suspense fallback={<div className="container mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">Loading...</div>}>
+      <QuizPage />
+    </Suspense>
+  );
+}
+
+function QuizPage() {
   const params = useParams<{ slug: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();

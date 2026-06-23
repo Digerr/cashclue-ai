@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { Search, Shuffle, ArrowLeft, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +10,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useLang } from '@/components/brainbolt/language-context';
 import { SEED_QUIZZES, getLocalized } from '@/lib/quiz-data';
 
-export default function CategoriesPage() {
+export default function CategoriesPageWrapper() {
+  return (
+    <Suspense fallback={<div className="container mx-auto max-w-7xl px-4 py-20 text-center text-muted-foreground">Loading...</div>}>
+      <CategoriesPage />
+    </Suspense>
+  );
+}
+
+function CategoriesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t, lang } = useLang();
