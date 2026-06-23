@@ -13,9 +13,9 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'logo' | 'name' | 'credit' | 'done'>('logo');
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('name'), 300);
-    const t2 = setTimeout(() => setPhase('credit'), 700);
-    const t3 = setTimeout(() => { setPhase('done'); onComplete(); }, 1400);
+    const t1 = setTimeout(() => setPhase('name'), 500);
+    const t2 = setTimeout(() => setPhase('credit'), 1100);
+    const t3 = setTimeout(() => { setPhase('done'); onComplete(); }, 2900);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, [onComplete]);
 
