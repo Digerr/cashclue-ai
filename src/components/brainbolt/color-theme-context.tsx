@@ -13,7 +13,7 @@ export const THEMES: { id: ThemeId; label: string; swatch: string[] }[] = [
 ];
 
 const DEFAULT_THEME: ThemeId = 'emerald';
-const STORAGE_KEY = 'cashclue:theme';
+const STORAGE_KEY = 'brainbolt:theme';
 
 interface ThemeCtx {
   theme: ThemeId;
