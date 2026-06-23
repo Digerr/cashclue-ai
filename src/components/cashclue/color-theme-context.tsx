@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 
 export type ThemeId = 'emerald' | 'cyber' | 'sunset' | 'mono' | 'royal';
 
@@ -25,25 +25,22 @@ const Ctx = createContext<ThemeCtx>({
   setTheme: () => {},
 });
 
-/**
- * Read initial theme from localStorage on client-side first render.
- * The inline script in layout.tsx already applied data-theme before React hydrates,
- * so this is just to sync React state with the DOM.
- */
-function getInitialTheme(): ThemeId {
-  if (typeof window === 'undefined') return DEFAULT_THEME;
-  try {
-    const stored = window.localStorage.getItem(STORAGE_KEY) as ThemeId | null;
-    return stored && THEMES.some((x) => x.id === stored) ? stored : DEFAULT_THEME;
-  } catch {
-    return DEFAULT_THEME;
-  }
-}
-
 export function ColorThemeProvider({ children }: { children: React.ReactNode }) {
-  // useState lazy initializer — runs ONCE on client first render, never on server
-  // (server render uses DEFAULT_THEME, which matches the inline-script default)
-  const [theme, setThemeState] = useState<ThemeId>(getInitialTheme);
+  const [theme, setThemeState] = useState<ThemeId>(DEFAULT_THEME);
+
+  // On client mount: read theme from localStorage and apply to <html>.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY) as ThemeId | null;
+      const t = stored && THEMES.some((x) => x.id === stored) ? stored : DEFAULT_THEME;
+      document.documentElement.setAttribute('data-theme', t);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setThemeState(t);
+    } catch {
+      document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+    }
+  }, []);
 
   const setTheme = useCallback((t: ThemeId) => {
     setThemeState(t);
